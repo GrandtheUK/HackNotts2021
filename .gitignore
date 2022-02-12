@@ -125,3 +125,6 @@ dmypy.json
 
 # used for testing classes - Mike
 demoMain.py
+
+# Pixel art files for editing - Jake
+*.ase
