@@ -1,10 +1,8 @@
-import imp
-import pygame
-from config import BOBBER_TRAVEL_SPEED, DISPLAY
-import sprite_sheet
-from random import randint
+from extra_funcs import rand_with_step
+import pygame, sprite_sheet
+from random import randint, randrange, uniform
 import fish
-
+from config import *
 
 class Fisherman(pygame.sprite.Sprite):
     spriteSheet = sprite_sheet.Spritesheet("sprites/player_tall.png", (16,32), (1,1))
@@ -25,7 +23,7 @@ class Fisherman(pygame.sprite.Sprite):
         self.castCounter = 0
         self.hookedFish = False
         self.checkCatchCounter = 0
-        self.catchChance = 1
+        self.catchMultiplier = 1
         self.castingAnimationCounter = 0
         self.castingAnimationTicks = 0
     
@@ -42,8 +40,9 @@ class Fisherman(pygame.sprite.Sprite):
     def update(self):
         if self.float:
             if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks() and not self.float.caughtFish:
-                self.checkCatchCounter = pygame.time.get_ticks() + 2000
-                if randint(0,self.catchChance) == 1:
+                self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
+                finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
+                if rand_with_step(0, finalCatchChance, 0.125) == 1:
                     print("fish caught")
                     self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
