@@ -2,7 +2,7 @@ import pygame
 import sprite_sheet
 
 class Fisherman(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("fisherman.jpg", (100,100), (3,3))
+    spriteSheet = sprite_sheet.Spritesheet("fisherman.jpg", (1024,1325), (1,1))
 
     def __init__(self, posx, posy, height, width) -> None:
         super().__init__()
@@ -14,6 +14,9 @@ class Fisherman(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.posx, self.posy)
+
+
+
 
 
 class Tile(pygame.sprite.Sprite):

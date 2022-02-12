@@ -1,10 +1,8 @@
 import pygame, sys, level, classes
-
-TILESIZE = 64
+from config import *
 
 
 def main():
-    DISPLAY=(TILESIZE*12, TILESIZE*9)
 
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY)
@@ -13,8 +11,12 @@ def main():
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
 
-    for i in range(12):
-        for j in range(9):
+    spriteGroup = pygame.sprite.Group()
+    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE)
+    spriteGroup.add(fisherman)
+
+    for i in range(GRID_WIDTH):
+        for j in range(GRID_HEIGHT):
             id = thisLevel[j][i]
             tile = classes.Tile(id,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE)
             tileGroup.add(tile)
@@ -27,6 +29,7 @@ def main():
                 sys.exit()
 
         tileGroup.draw(screen)
+        spriteGroup.draw(screen)
         pygame.display.flip()
 
 if __name__ == "__main__":
