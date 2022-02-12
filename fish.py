@@ -3,11 +3,11 @@ import random
 class Fish:
     def __init__(self, size):
         """Takes in min and max size of fish in a tuple (min, max)"""
-        self.type = self.getType()
-        self.size = self.getSize(size)
-        self.weight = self.setWeight()
+        self.type = self.createType()
+        self.size = self.size(size)
+        self.weight = self.createWeight()
 
-    def setWeight(self):
+    def createWeight(self):
         if self.type == "Carp":
             return round(random.uniform(0.5, 4.0), 2)
         elif self.type == "Chub":
@@ -34,7 +34,7 @@ class Fish:
         s = random.randint(size[0], size[1])
         return s
 
-    def getType(self):
+    def createType(self):
         prob = random.random()
 
         if prob < 0.05: return "Nemo"
