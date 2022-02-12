@@ -5,7 +5,7 @@ import fish
 from config import *
 
 class Fisherman(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("sprites/player_tall.png", (16,32), (1,1))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/player_sprites.png", (16,32), (1,5))
 
     def __init__(self, posx, posy, width, height, spriteGroup) -> None:
         super().__init__()
@@ -13,6 +13,7 @@ class Fisherman(pygame.sprite.Sprite):
         self.posy = posy
         self.height = height
         self.width = width
+        self.animationList = self.spriteSheet.get_sprite_list()
         img = self.spriteSheet.get_sprite_image(0)
         self.image = pygame.transform.scale(img, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -24,13 +25,13 @@ class Fisherman(pygame.sprite.Sprite):
         self.hookedFish = False
         self.checkCatchCounter = 0
         self.catchMultiplier = 1
-        self.castingAnimationCounter = 0
+        self.castingAnimationCounter = 1
         self.castingAnimationTicks = 0
     
     def cast(self):
         self.state = "casting"
-        self.float = Float(self.spriteGroup, self)
-        self.float.move((350,200))
+        self.castingAnimationCounter = 2
+        
     
     def reel(self):
         self.state = "reeling"
@@ -48,14 +49,17 @@ class Fisherman(pygame.sprite.Sprite):
                     self.state = "caughtFish"
                     self.float.caughtFish = True
         
-        # if pygame.time.get_ticks() > self.animationTicks + 200:
-        #         self.animationTicks = pygame.time.get_ticks()
-        #         self.animationCounter += 1
-        #         if self.animationCounter >= len(self.animationList):
-        #             self.animationCounter = 1
-        #         img = self.animationList[self.animationCounter]
-        #         self.image = pygame.transform.scale(img, (50, 50))
-
+        if self.state == "casting" and pygame.time.get_ticks() > self.castingAnimationTicks and self.castingAnimationCounter < len(self.animationList):
+            self.castingAnimationTicks = pygame.time.get_ticks() + 200   
+            img = self.animationList[self.castingAnimationCounter]
+            self.image = pygame.transform.scale(img, (self.width, self.height))
+            self.castingAnimationCounter += 1
+            if self.castingAnimationCounter >= len(self.animationList):
+                self.float = Float(self.spriteGroup, self)
+                self.float.move((350,200))
+                self.state == "standing"
+                img = self.animationList[0]
+                self.image = pygame.transform.scale(img, (self.width, self.height)) 
 
 
 class Float(pygame.sprite.Sprite):
