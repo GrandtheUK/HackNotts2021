@@ -1,6 +1,9 @@
+import imp
 import pygame
 from config import BOBBER_TRAVEL_SPEED
 import sprite_sheet
+from random import randint
+import fish
 
 
 class Fisherman(pygame.sprite.Sprite):
@@ -20,6 +23,9 @@ class Fisherman(pygame.sprite.Sprite):
         self.spriteGroup = spriteGroup
         self.state = "standing"
         self.castCounter = 0
+        self.hookedFish = False
+        self.checkCatchCounter = 0
+        self.catchChance = 5
     
     def cast(self):
         self.state = "casting"
@@ -32,7 +38,13 @@ class Fisherman(pygame.sprite.Sprite):
         self.float.target = self.rect.midtop
 
     def update(self):
-        pass
+        if self.float:
+            if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks():
+                self.checkCatchCounter = pygame.time.get_ticks() + 5000
+                if randint(0,self.catchChance) == 1:
+                    self.hookedFish = fish.Fish((1,20))
+                    print(self.hookedFish)
+
         # if self.state == "casting":
         #     self.float.move(-5,-5)
         #     self.castCounter += 1
@@ -92,6 +104,7 @@ class Float(pygame.sprite.Sprite):
                 self.pos = self.target
                 if self.state == "casting":
                     self.state = "inWater"
+                    self.fisherman.state = "standing"
                 elif self.state == "reeling":
                     self.fisherman.float = None
                     self.kill()

@@ -64,6 +64,8 @@ def main():
         spriteGroup.update()
         spriteGroup.draw(screen)
 
+
+
         pygame.display.flip()
         clock.tick(60)
 
