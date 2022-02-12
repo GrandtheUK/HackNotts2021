@@ -1,6 +1,12 @@
-import pygame,sys
+import pygame,sys,json
+
+def drawLevel(screen,gridSize,tileSize):
+    with open("levels/01-river.json") as f:
+        level = json.load(f)
+    print(level)
 
 def drawGrid(screen,gridSize,tileSize):
+    """Draws a grey and black grid to the screen"""
     background=pygame.Surface(screen.get_size())
     blackTile=pygame.Surface(tileSize)
     greyTile=pygame.Surface(tileSize)
@@ -25,12 +31,7 @@ def drawGrid(screen,gridSize,tileSize):
     screen.blit(background,(0,0))
 
 
-
-
-    print(gridSize)
-
-
-def main():#
+def main():
     DISPLAY=(1600,896)
 
     pygame.init()
@@ -59,6 +60,7 @@ def main():#
 
 
         pygame.display.flip()
+
 
 if __name__ == "__main__":
     main()
