@@ -3,3 +3,5 @@ GRID_WIDTH = 12
 GRID_HEIGHT = 9
 DISPLAY=(TILESIZE*GRID_WIDTH, TILESIZE*GRID_HEIGHT)
 BOBBER_TRAVEL_SPEED = 2
+FISH_CATCH_CHANCE = 0.083 # Once every 12 seconds on average
+MINIMUM_CATCH_CHANCE = 1 # Lowest time it takes to catch a fish, in seconds
