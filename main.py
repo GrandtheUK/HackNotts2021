@@ -14,7 +14,7 @@ def main():
 
     # fisherman sprite
     spriteGroup = pygame.sprite.Group()
-    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2)
+    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2,spriteGroup)
     spriteGroup.add(fisherman)
 
     floatPos = (200,200)
@@ -27,6 +27,7 @@ def main():
             tile = classes.Tile(id,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE)
             tileGroup.add(tile)
 
+    clock = pygame.time.Clock()
 
     while True:
         for event in pygame.event.get():
@@ -34,23 +35,28 @@ def main():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    floatPos = (floatPos[0], floatPos[1] - 10)
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_DOWN:
-                    floatPos = (floatPos[0], floatPos[1] + 10)
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_RIGHT:
-                    floatPos = (floatPos[0] + 10, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_LEFT:
-                    floatPos = (floatPos[0] - 10, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
+                if fisherman.float:
+                    if event.key == pygame.K_UP:
+                        fisherman.float.move(0,-10)
+                    if event.key == pygame.K_DOWN:
+                        fisherman.float.move(0,10)
+                    if event.key == pygame.K_RIGHT:
+                        fisherman.float.move(10,0)
+                    if event.key == pygame.K_LEFT:
+                        fisherman.float.move(-10,0)
+                if event.key == pygame.K_SPACE:
+                    fisherman.cast()
 
         tileGroup.draw(screen)
-        fishingLine.update()
+        showLine = False
+        if fisherman.float:
+            showLine = True
+            fishingLine.endPos = fisherman.float.rect.center
+        fishingLine.update(showLine)
+        spriteGroup.update()
         spriteGroup.draw(screen)
         pygame.display.flip()
+        clock.tick(60)
 
 if __name__ == "__main__":
     main()

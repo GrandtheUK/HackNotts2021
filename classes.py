@@ -4,7 +4,7 @@ import sprite_sheet
 class Fisherman(pygame.sprite.Sprite):
     spriteSheet = sprite_sheet.Spritesheet("sprites/player_tall.png", (16,32), (1,1))
 
-    def __init__(self, posx, posy, width, height) -> None:
+    def __init__(self, posx, posy, width, height, spriteGroup) -> None:
         super().__init__()
         self.posx = posx
         self.posy = posy
@@ -14,6 +14,38 @@ class Fisherman(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.posx, self.posy)
+        self.float = None
+        self.spriteGroup = spriteGroup
+        self.state = "standing"
+        self.castCounter = 0
+    
+    def cast(self):
+        self.state = "casting"
+        self.float = Float(self.spriteGroup, (self.posx, self.posy))
+
+    def update(self):
+        if self.state == "casting":
+            self.float.move(-5,-5)
+            self.castCounter += 1
+            if self.castCounter == 30:
+                self.state = "standing"
+                self.castCounter = 0
+
+
+
+class Float(pygame.sprite.Sprite):
+    def __init__(self, spriteGroup, pos) -> None:
+        super().__init__()
+        img = pygame.image.load("R.jpg")
+        self.image = pygame.transform.scale(img, (50, 50))
+        self.image.set_colorkey((255,255,255))
+        self.rect = self.image.get_rect()
+        self.rect.center = pos
+        spriteGroup.add(self)
+        self.inWater = False
+
+    def move(self, movex, movey):
+        self.rect.center = (self.rect.center[0] + movex, self.rect.center[1] + movey)
 
 
 class Tile(pygame.sprite.Sprite):
@@ -37,8 +69,9 @@ class Line:
        self.endPos = endPos
        self.screen = screen
 
-    def update(self):
-        pygame.draw.line(self.screen, (0,0,0), self.startPos, self.endPos)
+    def update(self, showLine = False):
+        if showLine:
+            pygame.draw.line(self.screen, (0,0,0), self.startPos, self.endPos)
 
     def set_endPos(self, pos):
         self.endPos = pos
