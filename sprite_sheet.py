@@ -7,9 +7,9 @@ class Spritesheet():
         self.colourKey = colourKey
         self.spriteList = []
         for i in range(gridDim[0]):
-            x = startCoords[0] + i * spriteDim[0]
+            y = startCoords[0] + i * spriteDim[0]
             for j in range(gridDim[1]):
-                y = startCoords[1] + j * spriteDim[1]
+                x = startCoords[1] + j * spriteDim[1]
                 sprite = pygame.Surface([spriteDim[0], spriteDim[1]])
                 sprite.blit( self.sheet, (0,0), (x,y,spriteDim[0], spriteDim[1]) )
                 sprite.set_colorkey(self.colourKey)
