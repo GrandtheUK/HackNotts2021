@@ -8,8 +8,6 @@ pygame.display.set_caption("Fishing Game")
 
 def main():
 
-def main():
-
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
 
