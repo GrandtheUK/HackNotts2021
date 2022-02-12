@@ -2,12 +2,8 @@ import pygame
 import sprite_sheet
 
 class Fisherman(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("fisherman.jpg")
-
-    animations = {
-        "standing" : spriteSheet.get_animation_list("fisherman standing"),
-        "catching" : spriteSheet.get_animation_list("fisherman catching")
-    }
+    spriteSheet = sprite_sheet.Spritesheet("fisherman.jpg", (100,100), (3,3))
+    print(spriteSheet.get_sprite_list())
 
     def __init__(self, posx, posy, height, width) -> None:
         super().__init__()
@@ -15,7 +11,9 @@ class Fisherman(pygame.sprite.Sprite):
         self.posy = posy
         self.height = height
         self.width = width
-        img = self.spriteSheet.get_sprite_image("fisherman standing", 0)
+        img = self.spriteSheet.get_sprite_image(0)
         self.image = pygame.transform.scale(img, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.posx, self.posy)
+
+

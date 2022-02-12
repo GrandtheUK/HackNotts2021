@@ -1,25 +1,30 @@
 import pygame
-import spriteSheet_meta
 
 
 class Spritesheet():
-    def __init__(self, file, colourKey=(0,0,0)):
+    def __init__(self, file, spriteDim, gridDim, startCoords=(0,0), colourKey=(0,0,0)):
         self.sheet = pygame.image.load(file)
         self.colourKey = colourKey
+        self.spriteList = []
+        for i in range(gridDim[0]):
+            x = startCoords[0] + i * spriteDim[0]
+            for j in range(gridDim[1]):
+                y = startCoords[1] + j * spriteDim[1]
+                sprite = pygame.Surface([spriteDim[0], spriteDim[1]])
+                sprite.blit( self.sheet, (0,0), (x,y,spriteDim[0], spriteDim[1]) )
+                sprite.set_colorkey(self.colourKey)
+                self.spriteList.append(sprite)
 
-    def get_sprite_image(self, name, id, flip=False):
+
+    def get_sprite_image(self, id, flip=False):
         """Returns single image from spritesheet"""
-        spriteDimensions = spriteSheet_meta.get_sprite(name, id)
-        sprite = pygame.Surface([spriteDimensions[2], spriteDimensions[3]])
-        sprite.blit( self.sheet, (0,0), spriteDimensions )
+        sprite = self.spriteList[id]
         if flip:
-            sprite = pygame.transform.flip(sprite, False, True)
-        sprite.set_colorkey(self.colourKey)
+            sprite = pygame.transform.flip(sprite, True, False)
         return sprite
         
-    def get_animation_list(self, name, flipX=False):
+    def get_sprite_list(self, flip=False):
         """Returns tuple of all images in sequence for sprite"""
-        animationList = [self.get_sprite_image(name,i,flipX) for i,_ in enumerate(spriteSheet_meta.sprites[name])]
+        animationList = [self.get_sprite_image(i,flip) for i,_ in enumerate(self.spriteList)]
         return animationList
-
 
