@@ -4,7 +4,7 @@ class Fish:
     def __init__(self, size):
         """Takes in min and max size of fish in a tuple (min, max)"""
         self.type = self.createType()
-        self.size = self.size(size)
+        self.size = self.get_size(size)
         self.weight = self.createWeight()
 
     def createWeight(self):
@@ -29,8 +29,10 @@ class Fish:
         else:
             return 1
 
-    
-    def getSize(self, size):
+    def __repr__(self) -> str:
+        return self.type
+
+    def get_size(self, size):
         s = random.randint(size[0], size[1])
         return s
 
