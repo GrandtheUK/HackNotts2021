@@ -2,6 +2,7 @@ from math import ceil
 from random import randint
 
 def rand_with_step(low,high,step,count=1,bias=False):
+    '''This function was taken from stackoverflow to help get a random float with a step'''
     n = 1/step
     if count > 1:
         val = randint(low*n,high*n,count)*step
