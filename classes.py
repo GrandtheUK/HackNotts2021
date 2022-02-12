@@ -30,22 +30,37 @@ class Fisherman(pygame.sprite.Sprite):
             if self.castCounter == 30:
                 self.state = "standing"
                 self.castCounter = 0
+                self.float.inWater = True
 
 
 
 class Float(pygame.sprite.Sprite):
+    spriteSheet = sprite_sheet.Spritesheet("sprites/bobber.png", (16,16), (1,4))
     def __init__(self, spriteGroup, pos) -> None:
         super().__init__()
-        img = pygame.image.load("R.jpg")
+        img = self.spriteSheet.get_sprite_image(0)
+        self.animationList = self.spriteSheet.get_sprite_list()
         self.image = pygame.transform.scale(img, (50, 50))
-        self.image.set_colorkey((255,255,255))
+        self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.center = pos
         spriteGroup.add(self)
         self.inWater = False
+        self.animationTicks = 0
+        self.animationCounter = 1
 
     def move(self, movex, movey):
         self.rect.center = (self.rect.center[0] + movex, self.rect.center[1] + movey)
+    
+    def update(self):
+        if self.inWater:
+            if pygame.time.get_ticks() > self.animationTicks + 200:
+                self.animationTicks = pygame.time.get_ticks()
+                self.animationCounter += 1
+                if self.animationCounter >= len(self.animationList):
+                    self.animationCounter = 1
+                img = self.spriteSheet.get_sprite_image(self.animationCounter)
+                self.image = pygame.transform.scale(img, (50, 50))
 
 
 class Tile(pygame.sprite.Sprite):
