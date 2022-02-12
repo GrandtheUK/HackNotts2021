@@ -28,10 +28,9 @@ class Fish:
             return round(random.uniform(3.0, 15.0), 2)
         else:
             return 1
-        
 
     
-    def size(self, size):
+    def getSize(self, size):
         s = random.randint(size[0], size[1])
         return s
 

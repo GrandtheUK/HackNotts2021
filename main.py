@@ -13,7 +13,7 @@ def main():
 
     # fisherman sprite
     spriteGroup = pygame.sprite.Group()
-    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2)
+    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2,spriteGroup)
     spriteGroup.add(fisherman)
 
     floatPos = (200,200)
@@ -26,32 +26,43 @@ def main():
             tile = classes.Tile(id,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE)
             tileGroup.add(tile)
 
+    clock = pygame.time.Clock()
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-                floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
-                fishingLine.set_endPos(floatPos)
-        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
-                fishingLine.set_endPos(floatPos)
-        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
-                fishingLine.set_endPos(floatPos)
-        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
-                fishingLine.set_endPos(floatPos)
+                
+            if event.type == pygame.KEYDOWN:
+                keys = pygame.key.get_pressed()
+                if fisherman.float:
+                    if keys[pygame.K_UP] or keys[pygame.K_w]:
+                        floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
+                        fisherman.float.rect.center = floatPos
+                    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                        floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
+                        fisherman.float.rect.center = floatPos
+                    elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                        floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
+                        fisherman.float.rect.center = floatPos
+                    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                        floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
+                        fisherman.float.rect.center = floatPos
+                if event.key == pygame.K_SPACE:
+                    fisherman.cast()
 
         tileGroup.draw(screen)
-        fishingLine.update()
+        showLine = False
+        if fisherman.float:
+            showLine = True
+            fishingLine.endPos = fisherman.float.rect.center
+        fishingLine.update(showLine)
+        spriteGroup.update()
         spriteGroup.draw(screen)
 
         pygame.display.flip()
+        clock.tick(60)
 
 if __name__ == "__main__":
     main()
