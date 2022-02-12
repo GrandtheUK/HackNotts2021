@@ -1,15 +1,17 @@
 import pygame,sys,json
 
-def drawLevel(screen,gridSize,tileSize):
+TILESIZE = 64
+
+def drawLevel(screen,gridSize,TILESIZE):
     with open("levels/01-river.json") as f:
         level = json.load(f)
     print(level)
 
-def drawGrid(screen,gridSize,tileSize):
+def drawGrid(screen,gridSize,TILESIZE):
     """Draws a grey and black grid to the screen"""
     background=pygame.Surface(screen.get_size())
-    blackTile=pygame.Surface(tileSize)
-    greyTile=pygame.Surface(tileSize)
+    blackTile=pygame.Surface((TILESIZE, TILESIZE))
+    greyTile=pygame.Surface((TILESIZE, TILESIZE))
     blackTile.fill((0,0,0))
     blackTile.fill((128,128,128))
 
@@ -18,13 +20,13 @@ def drawGrid(screen,gridSize,tileSize):
     while i<gridSize[0]:
         while j<gridSize[1]:
             if (i%2==0) and (j%2==0):
-                background.blit(blackTile,(i*tileSize[0],j*tileSize[1]))
+                background.blit(blackTile,(i*TILESIZE,j*TILESIZE))
             elif (i%2==0) and (j%2==1):
-                background.blit(greyTile,(i*tileSize[0],j*tileSize[1]))
+                background.blit(greyTile,(i*TILESIZE,j*TILESIZE))
             elif (i%2==1) and (j%2==0):
-                background.blit(greyTile,(i*tileSize[0],j*tileSize[1]))
+                background.blit(greyTile,(i*TILESIZE,j*TILESIZE))
             elif (i%2==1) and (j%2==1):
-                background.blit(blackTile,(i*tileSize[0],j*tileSize[1]))
+                background.blit(blackTile,(i*TILESIZE,j*TILESIZE))
             j+=1
         i+=1
         j=0
@@ -32,23 +34,22 @@ def drawGrid(screen,gridSize,tileSize):
 
 
 def main():
-    tileSize=[64,64]
-    DISPLAY=(tileSize[0]*12,tileSize[1]*9)
+    DISPLAY=(TILESIZE*12, TILESIZE*9)
 
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY)
     pygame.display.set_caption("Fishing Game")
 
     screenSize=screen.get_size()
-    gridSize=[screenSize[0]/tileSize[0],screenSize[1]/tileSize[1]]
+    gridSize=[screenSize[0]/TILESIZE,screenSize[1]/TILESIZE]
 
     background = pygame.Surface(screen.get_size())
     background = background.convert()
     background.fill((250,250,250))
-    drawGrid(screen,gridSize,tileSize)
+    drawGrid(screen,gridSize,TILESIZE)
 
     screen.blit(background, (0,0))
-    drawGrid(screen,gridSize,tileSize)
+    drawGrid(screen,gridSize,TILESIZE)
     pygame.display.flip()
 
 
