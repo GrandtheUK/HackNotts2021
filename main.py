@@ -1,10 +1,9 @@
 
-from tracemalloc import start
-import pygame, sys, level, classes, menu
+import pygame, sys, level, classes, menu, controlPanel
 from config import *
 
 pygame.init()
-screen = pygame.display.set_mode(DISPLAY)
+screen = pygame.display.set_mode(WINDOW)
 icon = pygame.image.load("./sprites/icon.png")
 pygame.display.set_caption("Fishing Game")
 pygame.display.set_icon(icon)
@@ -34,6 +33,8 @@ def main():
 
     clock = pygame.time.Clock()
 
+    cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1])
+
     while True:
         while menuRunning:
             start_page.run_menu()
@@ -44,6 +45,8 @@ def main():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    cp.check_cursor_pos(pygame.mouse.get_pos())
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         if fisherman.float:
@@ -74,6 +77,7 @@ def main():
             fishingLine.update(showLine)
             spriteGroup.update()
             spriteGroup.draw(screen)
+            cp.draw(screen)
 
             pygame.display.flip()
             clock.tick(60)
