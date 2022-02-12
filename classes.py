@@ -1,5 +1,6 @@
+from extra_funcs import rand_with_step
 import pygame, sprite_sheet
-from random import randint
+from random import randint, randrange, uniform
 import fish
 from config import *
 
@@ -41,9 +42,9 @@ class Fisherman(pygame.sprite.Sprite):
             if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks() and not self.float.caughtFish:
                 self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
                 finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
-                if randint(0, self.catchMultiplier) == 1:
+                if rand_with_step(0, finalCatchChance, 0.125) == 1:
                     print("fish caught")
-                    self.hookedFish = Fish.Fish((1,20))
+                    self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
                     self.float.caughtFish = True
         
