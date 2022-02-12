@@ -5,7 +5,7 @@ import fish
 from config import *
 
 class Fisherman(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("sprites/player_tall.png", (16,32), (1,1))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/player_sprites.png", (16,32), (1,1))
 
     def __init__(self, posx, posy, width, height, spriteGroup) -> None:
         super().__init__()
