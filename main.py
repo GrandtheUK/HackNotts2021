@@ -1,56 +1,30 @@
-import pygame,sys,json
 
-def drawLevel(screen,gridSize,tileSize):
-    with open("levels/01-river.json") as f:
-        level = json.load(f)
-    print(level)
-
-def drawGrid(screen,gridSize,tileSize):
-    """Draws a grey and black grid to the screen"""
-    background=pygame.Surface(screen.get_size())
-    blackTile=pygame.Surface(tileSize)
-    greyTile=pygame.Surface(tileSize)
-    blackTile.fill((0,0,0))
-    blackTile.fill((128,128,128))
-
-    i=0
-    j=0
-    while i<gridSize[0]:
-        while j<gridSize[1]:
-            if (i%2==0) and (j%2==0):
-                background.blit(blackTile,(i*tileSize[0],j*tileSize[1]))
-            elif (i%2==0) and (j%2==1):
-                background.blit(greyTile,(i*tileSize[0],j*tileSize[1]))
-            elif (i%2==1) and (j%2==0):
-                background.blit(greyTile,(i*tileSize[0],j*tileSize[1]))
-            elif (i%2==1) and (j%2==1):
-                background.blit(blackTile,(i*tileSize[0],j*tileSize[1]))
-            j+=1
-        i+=1
-        j=0
-    screen.blit(background,(0,0))
+import pygame, sys, level, classes
+from config import *
 
 pygame.init()
 screen = pygame.display.set_mode(DISPLAY)
 pygame.display.set_caption("Fishing Game")
 
 def main():
-    DISPLAY=(1600,896)
 
-def main():
+    tileGroup = pygame.sprite.Group()
+    thisLevel = level.getLevelData("01-river")
 
-    screenSize=screen.get_size()
-    tileSize=[64,64]
-    gridSize=[screenSize[0]/tileSize[0],screenSize[1]/tileSize[1]]
+    # fisherman sprite
+    spriteGroup = pygame.sprite.Group()
+    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2)
+    spriteGroup.add(fisherman)
 
-    background = pygame.Surface(screen.get_size())
-    background = background.convert()
-    background.fill((250,250,250))
-    drawGrid(screen,gridSize,tileSize)
+    floatPos = (200,200)
+    # fishing line
+    fishingLine = classes.Line(screen, fisherman.rect.midtop, floatPos)
 
-    screen.blit(background, (0,0))
-    drawGrid(screen,gridSize,tileSize)
-    pygame.display.flip()
+    for i in range(GRID_WIDTH):
+        for j in range(GRID_HEIGHT):
+            id = thisLevel[j][i]
+            tile = classes.Tile(id,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE)
+            tileGroup.add(tile)
 
 
     while True:
@@ -59,30 +33,25 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-<<<<<<< Updated upstream
-
-=======
-            keys = pygame.key.pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                    floatPos = (floatPos[0], floatPos[1] - 1)
-                    fishingLine.set_endPos(floatPos)
-            elif keys[pygame.K_DOWN]:
-                    floatPos = (floatPos[0], floatPos[1] + 1)
-                    fishingLine.set_endPos(floatPos)
-            elif keys[pygame.K_LEFT]:
-                    floatPos = (floatPos[0] + 1, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
-            elif keys[pygame.K_RIGHT]:
-                    floatPos = (floatPos[0] - 1, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
-
+        keys = pygame.key.pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+                floatPos = (floatPos[0], floatPos[1] - 1)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_DOWN]:
+                floatPos = (floatPos[0], floatPos[1] + 1)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_LEFT]:
+                floatPos = (floatPos[0] + 1, floatPos[1])
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_RIGHT]:
+                floatPos = (floatPos[0] - 1, floatPos[1])
+                fishingLine.set_endPos(floatPos)
 
         tileGroup.draw(screen)
         fishingLine.update()
         spriteGroup.draw(screen)
->>>>>>> Stashed changes
-        pygame.display.flip()
 
+        pygame.display.flip()
 
 if __name__ == "__main__":
     main()
