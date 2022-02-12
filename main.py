@@ -34,23 +34,22 @@ def main():
                 pygame.quit()
                 sys.exit()
                 
-            if event.type == pygame.KEYDOWN:
-                keys = pygame.key.get_pressed()
-                if fisherman.float:
-                    if keys[pygame.K_UP] or keys[pygame.K_w]:
-                        floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
-                        fisherman.float.rect.center = floatPos
-                    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                        floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
-                        fisherman.float.rect.center = floatPos
-                    elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                        floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
-                        fisherman.float.rect.center = floatPos
-                    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                        floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
-                        fisherman.float.rect.center = floatPos
-                if event.key == pygame.K_SPACE:
-                    fisherman.cast()
+        keys = pygame.key.get_pressed()
+        if fisherman.float:
+            if keys[pygame.K_UP] or keys[pygame.K_w]:
+                floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
+                fisherman.float.rect.center = floatPos
+            elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
+                fisherman.float.rect.center = floatPos
+            elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
+                fisherman.float.rect.center = floatPos
+            elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
+                fisherman.float.rect.center = floatPos
+        if event.key == pygame.K_SPACE:
+            fisherman.cast()
 
         tileGroup.draw(screen)
         showLine = False
