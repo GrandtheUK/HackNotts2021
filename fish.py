@@ -19,7 +19,9 @@ class Fish:
         if self.type == "Grayling":
             return round(random.random(1.0, 6.7), 2)
         if self.type == "Shoe fish":
-            return round(random.random())
+            return random.randint(4, 13)
+        if self.type == "Dead fish":
+            return round(random.random(0.5, 10.0), 2)
 
     
     def size(self, size):
