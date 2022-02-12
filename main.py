@@ -14,11 +14,12 @@ def main():
 
     # fisherman sprite
     spriteGroup = pygame.sprite.Group()
-    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE)
+    fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2)
     spriteGroup.add(fisherman)
 
+    floatPos = (200,200)
     # fishing line
-    fishingLine = classes.Line(screen, fisherman.rect.midtop, (200,200))
+    fishingLine = classes.Line(screen, fisherman.rect.midtop, floatPos)
 
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):
@@ -32,7 +33,19 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    floatPos = (floatPos[0], floatPos[1] - 10)
+                    fishingLine.set_endPos(floatPos)
+                if event.key == pygame.K_DOWN:
+                    floatPos = (floatPos[0], floatPos[1] + 10)
+                    fishingLine.set_endPos(floatPos)
+                if event.key == pygame.K_RIGHT:
+                    floatPos = (floatPos[0] + 10, floatPos[1])
+                    fishingLine.set_endPos(floatPos)
+                if event.key == pygame.K_LEFT:
+                    floatPos = (floatPos[0] - 10, floatPos[1])
+                    fishingLine.set_endPos(floatPos)
 
         tileGroup.draw(screen)
         fishingLine.update()

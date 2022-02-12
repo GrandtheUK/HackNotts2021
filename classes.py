@@ -2,9 +2,9 @@ import pygame
 import sprite_sheet
 
 class Fisherman(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("fisherman.jpg", (1024,1325), (1,1))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/player_tall.png", (16,32), (1,1))
 
-    def __init__(self, posx, posy, height, width) -> None:
+    def __init__(self, posx, posy, width, height) -> None:
         super().__init__()
         self.posx = posx
         self.posy = posy
