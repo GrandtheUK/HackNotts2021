@@ -2,12 +2,13 @@
 import pygame, sys, level, classes
 from config import *
 
+pygame.init()
+screen = pygame.display.set_mode(DISPLAY)
+pygame.display.set_caption("Fishing Game")
 
 def main():
 
-    pygame.init()
-    screen = pygame.display.set_mode(DISPLAY)
-    pygame.display.set_caption("Fishing Game")
+def main():
 
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
