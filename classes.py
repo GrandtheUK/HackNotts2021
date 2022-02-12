@@ -16,9 +16,6 @@ class Fisherman(pygame.sprite.Sprite):
         self.rect.topleft = (self.posx, self.posy)
 
 
-
-
-
 class Tile(pygame.sprite.Sprite):
     spriteSheet = sprite_sheet.Spritesheet("sprites/background_sprites.png", (16,16), (4,5))
     def __init__(self, id, posx, posy, height, width) -> None:
@@ -34,3 +31,17 @@ class Tile(pygame.sprite.Sprite):
         self.rect.topleft = (self.posx, self.posy)
 
 
+class Line:
+    def __init__(self, screen, startPos, endPos) -> None:
+       self.startPos = startPos
+       self.endPos = endPos
+       self.screen = screen
+
+    def update(self):
+        pygame.draw.line(self.screen, (0,0,0), self.startPos, self.endPos)
+
+    def set_endPos(self, pos):
+        self.endPos = pos
+
+    def set_startPos(self, pos):
+        self.startPos = pos

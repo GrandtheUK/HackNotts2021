@@ -1,3 +1,4 @@
+
 import pygame, sys, level, classes
 from config import *
 
@@ -11,9 +12,13 @@ def main():
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
 
+    # fisherman sprite
     spriteGroup = pygame.sprite.Group()
     fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE)
     spriteGroup.add(fisherman)
+
+    # fishing line
+    fishingLine = classes.Line(screen, fisherman.rect.midtop, (200,200))
 
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):
@@ -28,7 +33,9 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+
         tileGroup.draw(screen)
+        fishingLine.update()
         spriteGroup.draw(screen)
         pygame.display.flip()
 
