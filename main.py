@@ -4,7 +4,9 @@ from config import *
 
 pygame.init()
 screen = pygame.display.set_mode(DISPLAY)
+icon = pygame.image.load("./sprites/icon.png")
 pygame.display.set_caption("Fishing Game")
+pygame.display.set_icon(icon)
 
 def main():
 
