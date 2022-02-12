@@ -1,12 +1,16 @@
 
-import pygame, sys, level, classes
+from tracemalloc import start
+import pygame, sys, level, classes, menu
 from config import *
 
 pygame.init()
 screen = pygame.display.set_mode(DISPLAY)
 pygame.display.set_caption("Fishing Game")
 
+start_page = menu.Menu(screen)
+
 def main():
+    menuRunning = True
 
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
@@ -29,43 +33,48 @@ def main():
     clock = pygame.time.Clock()
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    if fisherman.float:
-                        fisherman.reel()
-                    else:
-                        fisherman.cast()
-                
-        keys = pygame.key.get_pressed()
-        if fisherman.float:
-            if keys[pygame.K_UP] or keys[pygame.K_w]:
-                floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
-                fisherman.float.target = floatPos
-            elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
-                fisherman.float.target = floatPos
-            elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
-                fisherman.float.target = floatPos
-            elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
-                fisherman.float.target = floatPos
+        while menuRunning:
+            start_page.run_menu()
+            menuRunning = start_page.getState()
 
-        tileGroup.draw(screen)
-        showLine = False
-        if fisherman.float:
-            showLine = True
-            fishingLine.endPos = fisherman.float.rect.center
-        fishingLine.update(showLine)
-        spriteGroup.update()
-        spriteGroup.draw(screen)
+        while menuRunning == False:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        if fisherman.float:
+                            fisherman.reel()
+                        else:
+                            fisherman.cast()
+                    
+            keys = pygame.key.get_pressed()
+            if fisherman.float:
+                if keys[pygame.K_UP] or keys[pygame.K_w]:
+                    floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
+                    fisherman.float.target = floatPos
+                elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
+                    fisherman.float.target = floatPos
+                elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
+                    fisherman.float.target = floatPos
+                elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
+                    fisherman.float.target = floatPos
 
-        pygame.display.flip()
-        clock.tick(60)
+            tileGroup.draw(screen)
+            showLine = False
+            if fisherman.float:
+                showLine = True
+                fishingLine.endPos = fisherman.float.rect.center
+            fishingLine.update(showLine)
+            spriteGroup.update()
+            spriteGroup.draw(screen)
+
+            pygame.display.flip()
+            clock.tick(60)
 
 if __name__ == "__main__":
     main()
