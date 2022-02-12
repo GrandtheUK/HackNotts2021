@@ -2,12 +2,11 @@
 import pygame, sys, level, classes
 from config import *
 
+pygame.init()
+screen = pygame.display.set_mode(DISPLAY)
+pygame.display.set_caption("Fishing Game")
 
 def main():
-
-    pygame.init()
-    screen = pygame.display.set_mode(DISPLAY)
-    pygame.display.set_caption("Fishing Game")
 
     tileGroup = pygame.sprite.Group()
     thisLevel = level.getLevelData("01-river")
@@ -34,8 +33,6 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if fisherman.float:
                     if event.key == pygame.K_UP:
                         fisherman.float.move(0,-10)
                     if event.key == pygame.K_DOWN:
@@ -46,6 +43,22 @@ def main():
                         fisherman.float.move(-10,0)
                 if event.key == pygame.K_SPACE:
                     fisherman.cast()
+                if fisherman.float:
+            if event.type == pygame.KEYDOWN:
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+                floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
+                fishingLine.set_endPos(floatPos)
 
         tileGroup.draw(screen)
         showLine = False
@@ -55,6 +68,7 @@ def main():
         fishingLine.update(showLine)
         spriteGroup.update()
         spriteGroup.draw(screen)
+
         pygame.display.flip()
         clock.tick(60)
 

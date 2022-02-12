@@ -1,8 +1,8 @@
-import pygame, json
+import json
 
 LEVELS = ["01-river"]
 
-def loadLevel(levelName):#screen,gridSize,TILESIZE):
+def loadLevel(levelName):
     try:
         with open(f"levels/{levelName}.json") as f:
             level = json.load(f)
