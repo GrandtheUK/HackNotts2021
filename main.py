@@ -5,7 +5,9 @@ from config import *
 
 pygame.init()
 screen = pygame.display.set_mode(DISPLAY)
+icon = pygame.image.load("./sprites/icon.png")
 pygame.display.set_caption("Fishing Game")
+pygame.display.set_icon(icon)
 
 start_page = menu.Menu(screen)
 
@@ -22,7 +24,7 @@ def main():
 
     floatPos = (200,200)
     # fishing line
-    fishingLine = classes.Line(screen, fisherman.rect.midtop, floatPos)
+    fishingLine = classes.Line(screen, (fisherman.rect.centerx + 10,fisherman.rect.top + 10), floatPos)
 
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):
