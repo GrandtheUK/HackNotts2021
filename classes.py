@@ -35,11 +35,12 @@ class Fisherman(pygame.sprite.Sprite):
 
 
 class Float(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("sprites/bobber.png", (16,16), (1,4))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/bobber_sprites.png", (16,16), (1,4))
     def __init__(self, spriteGroup, pos) -> None:
         super().__init__()
-        img = self.spriteSheet.get_sprite_image(0)
+        
         self.animationList = self.spriteSheet.get_sprite_list()
+        img = self.animationList[0]
         self.image = pygame.transform.scale(img, (50, 50))
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
@@ -59,7 +60,7 @@ class Float(pygame.sprite.Sprite):
                 self.animationCounter += 1
                 if self.animationCounter >= len(self.animationList):
                     self.animationCounter = 1
-                img = self.spriteSheet.get_sprite_image(self.animationCounter)
+                img = self.animationList[self.animationCounter]
                 self.image = pygame.transform.scale(img, (50, 50))
 
 
