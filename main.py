@@ -18,7 +18,7 @@ def main():
 
     floatPos = (200,200)
     # fishing line
-    fishingLine = classes.Line(screen, fisherman.rect.midtop, floatPos)
+    fishingLine = classes.Line(screen, (fisherman.rect.centerx + 10,fisherman.rect.top + 10), floatPos)
 
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):
@@ -60,10 +60,10 @@ def main():
         if fisherman.float:
             showLine = True
             fishingLine.endPos = fisherman.float.rect.center
-        fishingLine.update(showLine)
+        
         spriteGroup.update()
         spriteGroup.draw(screen)
-
+        fishingLine.update(showLine)
 
 
         pygame.display.flip()

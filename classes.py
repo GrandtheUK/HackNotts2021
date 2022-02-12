@@ -26,11 +26,13 @@ class Fisherman(pygame.sprite.Sprite):
         self.hookedFish = False
         self.checkCatchCounter = 0
         self.catchChance = 1
+        self.castingAnimationCounter = 0
+        self.castingAnimationTicks = 0
     
     def cast(self):
         self.state = "casting"
         self.float = Float(self.spriteGroup, self)
-        self.float.move((200,200))
+        self.float.move((350,200))
     
     def reel(self):
         self.state = "reeling"
@@ -46,6 +48,14 @@ class Fisherman(pygame.sprite.Sprite):
                     self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
                     self.float.caughtFish = True
+        
+        # if pygame.time.get_ticks() > self.animationTicks + 200:
+        #         self.animationTicks = pygame.time.get_ticks()
+        #         self.animationCounter += 1
+        #         if self.animationCounter >= len(self.animationList):
+        #             self.animationCounter = 1
+        #         img = self.animationList[self.animationCounter]
+        #         self.image = pygame.transform.scale(img, (50, 50))
 
 
 
@@ -67,7 +77,7 @@ class Float(pygame.sprite.Sprite):
         self.pos = fisherman.rect.midtop
         self.target = fisherman.rect.midtop
         self.caughtFish = False
-        self.collisionRect = pygame.Rect(0, 0, self.rect.width * 0.5, self.rect.height * 0.5)
+        self.collisionRect = pygame.Rect(0, 0, self.rect.width * 0.2, self.rect.height * 0.2)
         self.collisionRect.center = self.rect.center
 
     def move(self, coords):
