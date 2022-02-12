@@ -1,6 +1,6 @@
 import pygame, sprite_sheet
 from random import randint
-from fish import Fish
+import fish
 from config import *
 
 class Fisherman(pygame.sprite.Sprite):
@@ -28,7 +28,13 @@ class Fisherman(pygame.sprite.Sprite):
     
     def cast(self):
         self.state = "casting"
-        self.float = Float(self.spriteGroup, (self.posx, self.posy))
+        self.float = Float(self.spriteGroup, self)
+        self.float.move((350,200))
+    
+    def reel(self):
+        self.state = "reeling"
+        self.float.state = "reeling"
+        self.float.target = self.rect.midtop
 
     def update(self):
         if self.float:
@@ -53,25 +59,41 @@ class Fisherman(pygame.sprite.Sprite):
 
 class Float(pygame.sprite.Sprite):
     spriteSheet = sprite_sheet.Spritesheet("sprites/bobber_sprites.png", (16,16), (1,4))
-    def __init__(self, spriteGroup, pos) -> None:
+    def __init__(self, spriteGroup, fisherman) -> None:
         super().__init__()
-        
+        self.fisherman = fisherman
         self.animationList = self.spriteSheet.get_sprite_list()
         img = self.animationList[0]
         self.image = pygame.transform.scale(img, (50, 50))
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
-        self.rect.center = pos
+        self.rect.center = fisherman.rect.midtop
         spriteGroup.add(self)
-        self.inWater = False
+        self.state = "casting"
         self.animationTicks = 0
         self.animationCounter = 1
+        self.pos = fisherman.rect.midtop
+        self.target = fisherman.rect.midtop
+        self.caughtFish = False
+        self.collisionRect = pygame.Rect(0, 0, self.rect.width * 0.2, self.rect.height * 0.2)
+        self.collisionRect.center = self.rect.center
 
-    def move(self, movex, movey):
-        self.rect.center = (self.rect.center[0] + movex, self.rect.center[1] + movey)
+    def move(self, coords):
+        self.target = coords
+
     
     def update(self):
-        if self.inWater:
+        # keep collision rect inline with rect
+        self.collisionRect.center = self.rect.center
+
+        if self.caughtFish:
+            for tile in Tile.landTiles:
+                if self.collisionRect.colliderect(tile.rect):
+                    vector = pygame.Vector2(self.rect.center) - pygame.Vector2(tile.rect.center)
+                    self.target = self.pos + vector
+        
+        speed = 1
+        if self.state == "inWater":
             if pygame.time.get_ticks() > self.animationTicks + 200:
                 self.animationTicks = pygame.time.get_ticks()
                 self.animationCounter += 1
@@ -79,9 +101,39 @@ class Float(pygame.sprite.Sprite):
                     self.animationCounter = 1
                 img = self.animationList[self.animationCounter]
                 self.image = pygame.transform.scale(img, (50, 50))
+        elif self.state == "casting":
+            speed = 3
+        elif self.state == "reeling":
+            img = self.animationList[0]
+            self.image = pygame.transform.scale(img, (50, 50)) 
+
+        if self.target != self.pos:
+            vector = pygame.Vector2(self.target) - pygame.Vector2(self.pos)
+            vectorLen = vector.length()
+            if vectorLen != 0:
+                vector.normalize_ip()
+                movement = vector * BOBBER_TRAVEL_SPEED * speed
+                self.pos += movement
+            if vectorLen < BOBBER_TRAVEL_SPEED * speed:
+                self.pos = self.target
+                if self.state == "casting":
+                    self.state = "inWater"
+                    self.fisherman.state = "standing"
+                elif self.state == "reeling":
+                    self.fisherman.float = None
+                    self.kill()
+                    return
+            self.rect.center = self.pos
+        else:
+            if self.caughtFish:
+                x = randint(0, DISPLAY[0])
+                y = randint(0, DISPLAY[1])
+                self.target = (x,y)
 
 
 class Tile(pygame.sprite.Sprite):
+    waterTiles = []
+    landTiles = []
     spriteSheet = sprite_sheet.Spritesheet("sprites/background_sprites.png", (16,16), (4,5))
     def __init__(self, id, posx, posy, height, width) -> None:
         super().__init__()
@@ -94,6 +146,10 @@ class Tile(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.posx, self.posy)
+        if id == 0:
+            self.waterTiles.append(self)
+        else:
+            self.landTiles.append(self)
 
 
 class Line:
