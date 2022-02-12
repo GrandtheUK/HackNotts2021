@@ -30,13 +30,14 @@ def drawGrid(screen,gridSize,tileSize):
         j=0
     screen.blit(background,(0,0))
 
+pygame.init()
+screen = pygame.display.set_mode(DISPLAY)
+pygame.display.set_caption("Fishing Game")
 
 def main():
     DISPLAY=(1600,896)
 
-    pygame.init()
-    screen = pygame.display.set_mode(DISPLAY)
-    pygame.display.set_caption("Fishing Game")
+def main():
 
     screenSize=screen.get_size()
     tileSize=[64,64]
