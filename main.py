@@ -1,9 +1,9 @@
 
-import pygame, sys, level, classes
+import pygame, sys, level, classes, controlPanel
 from config import *
 
 pygame.init()
-screen = pygame.display.set_mode(DISPLAY)
+screen = pygame.display.set_mode(WINDOW)
 icon = pygame.image.load("./sprites/icon.png")
 pygame.display.set_caption("Fishing Game")
 pygame.display.set_icon(icon)
@@ -30,11 +30,15 @@ def main():
 
     clock = pygame.time.Clock()
 
+    cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1])
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                cp.check_cursor_pos(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if fisherman.float:
@@ -66,6 +70,7 @@ def main():
         spriteGroup.update()
         spriteGroup.draw(screen)
         fishingLine.update(showLine)
+        cp.draw(screen)
 
 
         pygame.display.flip()
