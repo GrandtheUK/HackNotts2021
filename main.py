@@ -32,23 +32,25 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    floatPos = (floatPos[0], floatPos[1] - 10)
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_DOWN:
-                    floatPos = (floatPos[0], floatPos[1] + 10)
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_RIGHT:
-                    floatPos = (floatPos[0] + 10, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
-                if event.key == pygame.K_LEFT:
-                    floatPos = (floatPos[0] - 10, floatPos[1])
-                    fishingLine.set_endPos(floatPos)
+
+        keys = pygame.key.pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+                floatPos = (floatPos[0], floatPos[1] - 1)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_DOWN]:
+                floatPos = (floatPos[0], floatPos[1] + 1)
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_LEFT]:
+                floatPos = (floatPos[0] + 1, floatPos[1])
+                fishingLine.set_endPos(floatPos)
+        elif keys[pygame.K_RIGHT]:
+                floatPos = (floatPos[0] - 1, floatPos[1])
+                fishingLine.set_endPos(floatPos)
 
         tileGroup.draw(screen)
         fishingLine.update()
         spriteGroup.draw(screen)
+
         pygame.display.flip()
 
 if __name__ == "__main__":
