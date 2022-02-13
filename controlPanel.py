@@ -2,8 +2,8 @@ import pygame, sprite_sheet
 from config import DISPLAY
 import os
 
-controlPanelColour = (127,127,10)
-infographicColour = (180,180,20)
+controlPanelColour = (148, 93, 50)
+infographicColour = (158, 143, 105)
 
 def open_diary():
     os.startfile("diary.txt")
@@ -30,7 +30,7 @@ class ControlPanel:
         self.fishBarIcon = BarImage(100,100,(DISPLAY[0]-150, top), "sprites/fish_strength.png")
         self.lineBarVal = 0
         self.fishBarVal = 0
-        self.infographic = Infographic(90, 200, (105,top + 5))
+        self.infographic = Infographic(90, 220, (105,top + 5))
         self.lastFish = None
         
         
@@ -121,7 +121,7 @@ class Infographic:
             font = pygame.font.Font('Pokemon GB.ttf', 14)
             lineErr = font.render("Line Snapped!", True, (0,0,0))
             lineErrRect = lineErr.get_rect()
-            lineErrRect.topleft = (self.topleft[0]+5, self.topleft[1] + 40)
+            lineErrRect.topleft = (self.topleft[0]+10, self.topleft[1] + 40)
             pygame.Surface.blit(screen, lineErr, lineErrRect)  
         elif lastFish is not None:
             fishId = self.get_fish_id(lastFish.type)
@@ -130,7 +130,7 @@ class Infographic:
             else:
                 img = self.smallfish.get_sprite_image(fishId[1])
             image = pygame.transform.scale(img, (100-fishId[0]*50, 50))
-            pygame.Surface.blit(screen, image, (self.topleft[0]+5,self.topleft[1]+5))
+            pygame.Surface.blit(screen, image, (self.topleft[0]+5+25*fishId[0],self.topleft[1]+5))
 
             font = pygame.font.Font('Pokemon GB.ttf', 10)
         
