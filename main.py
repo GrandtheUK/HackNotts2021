@@ -86,6 +86,9 @@ def main():
             fishingLine.update(showLine)
             spriteGroup.update()
             spriteGroup.draw(screen)
+            if fisherman.hookedFish:
+                cp.fishBarVal = fisherman.hookedFish.energy
+            cp.lineBarVal = fisherman.lineStrength
             cp.draw(screen)
             cp.update()
 

@@ -7,7 +7,7 @@ class Fish:
         self.size = self.get_size(size)
         self.weight = self.createWeight()
         self.energy = 100
-        self.recoveryRate = random.randint(0,3)
+        self.recoveryRate = random.randint(0,5)
 
     def createWeight(self):
         if self.type == "Carp":
@@ -37,7 +37,7 @@ class Fish:
             self.energy = 100
 
     def __repr__(self) -> str:
-        return self.type
+        return f"{self.type}, {self.weight}, {self.size}"
 
     def get_size(self, size):
         s = random.randint(size[0], size[1])
