@@ -18,3 +18,13 @@ Fish: Carp
 Size: 25 inches
 Weight: 5 lbs
 ----------------------------------
+Timestamp: 2022-02-13 06:27:25.053096
+Fish: Carp
+Size: 11 inches
+Weight: 6 lbs
+----------------------------------
+Timestamp: 2022-02-13 06:29:31.937381
+Fish: Grayling
+Size: 11 inches
+Weight: 6 lbs
+----------------------------------
