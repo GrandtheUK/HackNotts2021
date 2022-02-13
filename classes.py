@@ -4,6 +4,7 @@ import pygame, sprite_sheet
 from random import randint
 import fish
 from config import *
+import log
 
 class Fisherman(pygame.sprite.Sprite):
     spriteSheet = sprite_sheet.Spritesheet("sprites/player_sprites.png", (16,32), (1,5))
@@ -31,12 +32,12 @@ class Fisherman(pygame.sprite.Sprite):
         self.lineStrength = 100
         self.fishCaught = False
         self.recoveryTimer = 0
-        self.lineRecoveryAmt = 5
+        self.lineRecoveryAmt = 18
         self.floatLaunchTarget = None
     
     def reel_in(self):
         if self.hookedFish:
-            self.lineStrength -= 1
+            self.lineStrength -= 2
             self.hookedFish.energy -= 1
             if self.lineStrength < 0:
                 print("line snap")
@@ -81,7 +82,7 @@ class Fisherman(pygame.sprite.Sprite):
                 self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
                 finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
                 if rand_with_step(0, finalCatchChance, 0.125) == 0:
-                    self.hookedFish = fish.Fish((1,20))
+                    self.hookedFish = fish.Fish()
                     self.state = "caughtFish"
                     self.float.caughtFish = True
                 img = self.animationList[4]
@@ -170,6 +171,7 @@ class Float(pygame.sprite.Sprite):
                     self.kill()
                     self.fisherman.state = "standing"
                     print(self.fisherman.hookedFish)
+                    log.log_fish(self.fisherman.hookedFish)
                     self.fisherman.hookedFish = None
                     self.caughtFish = False
                     self.fisherman.checkCatchCounter = 0
