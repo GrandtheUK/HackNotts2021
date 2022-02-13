@@ -11,7 +11,7 @@ class Menu:
 
         self.alignCenter = DISPLAY[0]/2, DISPLAY[1]/2
 
-        self.start_button = pygame.image.load("Start.png").convert()
+        self.start_button = pygame.image.load("sprites/start.png").convert()
         self.start_rect = self.start_button.get_rect()
         self.start_rect.center = self.alignCenter
 
