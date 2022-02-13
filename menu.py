@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, sys
 from pygame import MOUSEBUTTONDOWN
 from config import *
 
@@ -14,6 +14,11 @@ class Menu:
         self.start_button = pygame.image.load("Start.png").convert()
         self.start_rect = self.start_button.get_rect()
         self.start_rect.center = self.alignCenter
+
+        self.background = pygame.image.load("background.png").convert()
+        self.back_rect = self.background.get_rect()
+        self.back_rect.center = self.alignCenter
+
         self.run = True
 
     def run_menu(self):
@@ -21,6 +26,8 @@ class Menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
+                    pygame.quit()
+                    sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if self.start_button.get_rect(center = (self.alignCenter)).collidepoint(pos):
@@ -28,6 +35,7 @@ class Menu:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.run = False
+            self.screen.blit(self.background, self.back_rect)
             self.screen.blit(self.start_button, self.start_rect)
 
             pygame.display.update()
