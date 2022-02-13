@@ -48,7 +48,14 @@ class ControlPanel:
         elif self.mode == 1:
             self.power += 1
             if self.power > 100:
-                self.angle = 0
+                self.power = 0
+        angle = self.angle + 45
+        self.powerBar.angleBar = angle // (90 / 7)
+        powerBar = self.power // (100 / 8)
+        if powerBar > 7:
+            powerBar = 7
+        self.powerBar.powerBar = powerBar
+        
 
 
     def check_cursor_pos(self, mousepos):
@@ -58,16 +65,22 @@ class ControlPanel:
 
 
 class PowerBar:
-    spriteSheet = sprite_sheet.Spritesheet("sprites/power_bar.png", (32,32), (1,1))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/power_bar.png", (32,32), (8,7), (32,0))
     def __init__(self, dim, topleft) -> None:
+        self.dim = dim
         img = self.spriteSheet.get_sprite_image(0)
+        self.animationList = self.spriteSheet.get_sprite_list()
         self.image = pygame.transform.scale(img, (dim,dim))
         self.rect = self.image.get_rect()
         self.topleft = topleft
+        self.angleBar = 0
+        self.powerBar = 0
     
     def draw(self, screen):
+        imgIndex = int(self.powerBar * 7 + self.angleBar)
+        img = self.animationList[imgIndex]
+        self.image = pygame.transform.scale(img, (self.dim,self.dim))
         pygame.Surface.blit(screen, self.image, self.topleft)
-
 
 class Button:
     def __init__(self, width, height, topleft, buttonFunction=None) -> None:

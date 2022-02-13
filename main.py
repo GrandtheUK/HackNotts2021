@@ -35,7 +35,7 @@ def main():
     controlPanelFunctions = {
         "reel_in" : fisherman.reel_in
     }
-
+    
     cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1], controlPanelFunctions)
 
     while True:
@@ -54,16 +54,15 @@ def main():
                     if event.key == pygame.K_SPACE:
                         if cp.mode == 0:
                             cp.mode = 1
-                            print(cp.angle)
                         elif cp.mode == 1:
                             cp.mode = 2
-                            print(cp.power)
                             fisherman.cast(cp.angle, cp.power)
                         elif cp.mode == 2 and fisherman.float:
                             fisherman.reel()
                         if fisherman.state == "standing" and cp.mode == 2:
+                            cp.angle = 0
+                            cp.power = 0
                             cp.mode = 0
-                      
                     
             keys = pygame.key.get_pressed()
             if fisherman.float:

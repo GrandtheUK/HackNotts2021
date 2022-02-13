@@ -36,8 +36,10 @@ class Fisherman(pygame.sprite.Sprite):
     
     def reel_in(self):
         if self.hookedFish:
-            self.lineStrength -= 10
-            self.hookedFish.energy -= 10
+            self.lineStrength -= 1
+            self.hookedFish.energy -= 1
+            print(self.lineStrength)
+            print(self.hookedFish.energy)
             if self.lineStrength < 0:
                 print("line snap")
                 self.float.kill()
@@ -53,7 +55,6 @@ class Fisherman(pygame.sprite.Sprite):
     def cast(self, angle, power):
         vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 5) - pygame.Vector2(self.rect.center))
         vector = vector.rotate(angle)
-        print(self.rect.center)
         self.floatLaunchTarget = self.rect.center - vector
         self.state = "casting"
         self.castingAnimationCounter = 2
@@ -158,6 +159,11 @@ class Float(pygame.sprite.Sprite):
                 elif self.state in ("reeling", "reeledFish"):
                     self.fisherman.float = None
                     self.kill()
+                    self.fisherman.state = "standing"
+                    self.fisherman.hookedFish = None
+                    self.caughtFish = False
+                    self.fisherman.checkCatchCounter = 0
+                    self.fisherman.fishCaught = False
                     return
             self.rect.center = self.pos
         else:
