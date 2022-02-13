@@ -119,7 +119,7 @@ class Infographic:
     def draw(self, screen, lastFish):
         pygame.Surface.blit(screen, self.image, self.topleft)
         if lastFish == "line-snap":
-            font = freetype.Font('Pokemon GB.ttf', 16)
+            font = pygame.font.Font('Pokemon GB.ttf', 16)
             lineErr = font.render("Line Snapped!", True, (0,0,0))
             lineErrRect = lineErr.get_rect()
             lineErrRect.topleft = (self.topleft[0]+30, self.topleft[1] + 40)
@@ -133,7 +133,7 @@ class Infographic:
             image = pygame.transform.scale(img, (100-fishId[0]*50, 50))
             pygame.Surface.blit(screen, image, (self.topleft[0]+5+fishId[0]*25,self.topleft[1]+25))
 
-            font = freetype.Font('Pokemon GB.ttf', 12)
+            font = pygame.font.Font('Pokemon GB.ttf', 12)
         
             title = font.render(lastFish.type, True, (0,0,0))
             titleRect = title.get_rect()
