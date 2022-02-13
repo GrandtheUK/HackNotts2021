@@ -20,7 +20,7 @@ class ControlPanel:
         self.top = top
         self.powerBar = PowerBar(height, ( width//2 - height//2 ,top))
         self.buttons = {
-            "button1" :  Button(100,50,(0,top), test_function),
+            "button1" :  Button(100,50,(0,top), functions["exit"]),
             "button2" :  Button(100,50,(0,top + 50), open_diary)
         }
         self.angle = 0

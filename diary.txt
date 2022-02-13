@@ -13,3 +13,8 @@ Fish: Shoe fish
 Size: 44 inches
 Weight: 4 lbs
 ----------------------------------
+Timestamp: 2022-02-13 05:45:36.652085
+Fish: Carp
+Size: 25 inches
+Weight: 5 lbs
+----------------------------------
