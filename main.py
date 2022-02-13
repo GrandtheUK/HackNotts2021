@@ -5,7 +5,7 @@ from config import *
 pygame.init()
 screen = pygame.display.set_mode(WINDOW)
 icon = pygame.image.load("./sprites/icon.png")
-pygame.display.set_caption("Fishing Game")
+pygame.display.set_caption("Fishermun")
 pygame.display.set_icon(icon)
 
 start_page = menu.Menu(screen)
