@@ -20,12 +20,12 @@ class ControlPanel:
         self.powerBar = PowerBar(height, ( width//2 - height//2 ,top))
         self.buttons = {
             "button1" :  Button(100,50,(0,top), test_function),
-            "button2" :  Button(100,50,(0,top + 50), test_function2),
-            "reelButton" :  Button(100,50, (DISPLAY[0] - 100,top + 50), functions["reel_in"])
+            "button2" :  Button(100,50,(0,top + 50), test_function2)
         }
         self.angle = 0
         self.power = 0
-
+        self.mode = 0
+        self.angleIncrease = True
         
     def draw(self, screen):
         pygame.Surface.blit(screen, self.image, (0,self.top))
@@ -34,7 +34,29 @@ class ControlPanel:
             button.draw(screen)
 
     def update(self):
-        pass
+        if self.mode == 0:
+            if self.angleIncrease:
+                self.angle += 1
+                if self.angle > 45:
+                    self.angle = 45
+                    self.angleIncrease = False
+            else:
+                self.angle -= 1
+                if self.angle < -45:
+                    self.angle = -45
+                    self.angleIncrease = True
+        elif self.mode == 1:
+            self.power += 1
+            if self.power > 100:
+                self.power = 0
+        angle = self.angle + 45
+        self.powerBar.angleBar = angle // (90 / 7)
+        powerBar = self.power // (100 / 8)
+        if powerBar > 7:
+            powerBar = 7
+        self.powerBar.powerBar = powerBar
+        
+
 
     def check_cursor_pos(self, mousepos):
         for button in self.buttons.values():
@@ -43,16 +65,22 @@ class ControlPanel:
 
 
 class PowerBar:
-    spriteSheet = sprite_sheet.Spritesheet("sprites/power_bar.png", (32,32), (1,1))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/power_bar.png", (32,32), (8,7), (32,0))
     def __init__(self, dim, topleft) -> None:
+        self.dim = dim
         img = self.spriteSheet.get_sprite_image(0)
+        self.animationList = self.spriteSheet.get_sprite_list()
         self.image = pygame.transform.scale(img, (dim,dim))
         self.rect = self.image.get_rect()
         self.topleft = topleft
+        self.angleBar = 0
+        self.powerBar = 0
     
     def draw(self, screen):
+        imgIndex = int(self.powerBar * 7 + self.angleBar)
+        img = self.animationList[imgIndex]
+        self.image = pygame.transform.scale(img, (self.dim,self.dim))
         pygame.Surface.blit(screen, self.image, self.topleft)
-
 
 class Button:
     def __init__(self, width, height, topleft, buttonFunction=None) -> None:

@@ -25,7 +25,9 @@ class Menu:
                     pos = pygame.mouse.get_pos()
                     if self.start_button.get_rect(center = (self.alignCenter)).collidepoint(pos):
                         self.run = False
-                
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.run = False
             self.screen.blit(self.start_button, self.start_rect)
 
             pygame.display.update()

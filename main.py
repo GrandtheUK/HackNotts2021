@@ -35,7 +35,7 @@ def main():
     controlPanelFunctions = {
         "reel_in" : fisherman.reel_in
     }
-
+    
     cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1], controlPanelFunctions)
 
     while True:
@@ -52,25 +52,31 @@ def main():
                     cp.check_cursor_pos(pygame.mouse.get_pos())
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        if fisherman.float:
+                        if cp.mode == 0:
+                            cp.mode = 1
+                        elif cp.mode == 1:
+                            cp.mode = 2
+                            fisherman.cast(cp.angle, cp.power)
+                        elif cp.mode == 2 and fisherman.float:
                             fisherman.reel()
-                        else:
-                            fisherman.cast()
+                        if fisherman.state == "standing" and cp.mode == 2:
+                            cp.angle = 0
+                            cp.power = 0
+                            cp.mode = 0
                     
             keys = pygame.key.get_pressed()
             if fisherman.float:
-                if keys[pygame.K_UP] or keys[pygame.K_w]:
-                    floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
-                    fisherman.float.target = floatPos
-                elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                    floatPos = (floatPos[0], floatPos[1] + BOBBER_TRAVEL_SPEED)
-                    fisherman.float.target = floatPos
-                elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                    floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
-                    fisherman.float.target = floatPos
-                elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                    floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
-                    fisherman.float.target = floatPos
+                # if keys[pygame.K_UP] or keys[pygame.K_w]:
+                #     floatPos = (floatPos[0], floatPos[1] - BOBBER_TRAVEL_SPEED)
+                #     fisherman.float.target = floatPos
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    fisherman.reel_in()
+                # elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                #     floatPos = (floatPos[0] - BOBBER_TRAVEL_SPEED, floatPos[1])
+                #     fisherman.float.target = floatPos
+                # elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                #     floatPos = (floatPos[0] + BOBBER_TRAVEL_SPEED, floatPos[1])
+                #     fisherman.float.target = floatPos
 
             tileGroup.draw(screen)
             showLine = False
