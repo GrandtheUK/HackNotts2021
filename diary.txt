@@ -32,3 +32,8 @@ Fish: Zander
 Size: 10 inches
 Weight: 3 lbs
 ----------------------------------
+Timestamp: 2022-02-13 08:03:44.973597
+Fish: Nemo
+Size: 4 inches
+Weight: 2 lbs
+----------------------------------
