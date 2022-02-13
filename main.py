@@ -65,6 +65,9 @@ def main():
                         cp.angle = 0
                         cp.power = 0
                         cp.mode = 0
+                if event.key == pygame.K_MINUS and cp.mode == 2 and fisherman.float and not fisherman.hookedFish:
+                    fisherman.force_catch()
+
                 
         keys = pygame.key.get_pressed()
         if fisherman.float:
