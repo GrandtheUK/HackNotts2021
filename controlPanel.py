@@ -33,6 +33,9 @@ class ControlPanel:
         for button in self.buttons.values():
             button.draw(screen)
 
+    def update(self):
+        pass
+
     def check_cursor_pos(self, mousepos):
         for button in self.buttons.values():
             if button.rect.collidepoint(mousepos):
