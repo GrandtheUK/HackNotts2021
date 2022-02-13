@@ -42,4 +42,3 @@ class Fish:
                 case 1: return "Shoe"
                 case 2: return "Stick"
 
-
