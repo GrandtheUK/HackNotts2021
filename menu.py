@@ -14,6 +14,11 @@ class Menu:
         self.start_rect = self.start_button.get_rect()
         self.start_rect.center = (DISPLAY[0] / 2, 500)
 
+        self.instructions_image = pygame.image.load("sprites/instructions.png").convert_alpha()
+        self.instructions = pygame.transform.scale(self.instructions_image, (200, 150))
+        self.instructions_rect = self.instructions.get_rect()
+        self.instructions_rect.center = (DISPLAY[0] / 2, 600)
+
         background = pygame.image.load("catching_fish.png").convert()
         self.background = pygame.transform.scale(background, WINDOW)
         self.back_rect = self.background.get_rect()
@@ -37,6 +42,7 @@ class Menu:
                         self.run = False
             self.screen.blit(self.background, self.back_rect)
             self.screen.blit(self.start_button, self.start_rect)
+            self.screen.blit(self.instructions, self.instructions_rect)
 
             pygame.display.update()
     

@@ -27,68 +27,9 @@ Timestamp: 2022-02-13 06:29:31.937381
 Fish: Grayling
 Size: 11 inches
 Weight: 6 lbs
-----------------------------------Timestamp: 2022-02-13 08:57:07.602808
-Fish: Zander
-Size: 12 inches
-Weight: 2 lbs
-----------------------------------
-Timestamp: 2022-02-13 08:58:23.053603
-Fish: Shoe
-Size: 13 inches
-Weight: 5 lbs
 ----------------------------------
 Timestamp: 2022-02-13 08:59:03.386211
 Fish: Carp
 Size: 9 inches
 Weight: 7 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:06:31.612242
-Fish: Magikarp
-Size: 14 inches
-Weight: 6 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:07:25.202904
-Fish: Nemo
-Size: 3 inches
-Weight: 3 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:08:48.337577
-Fish: Dead fish
-Size: 11 inches
-Weight: 6 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:10:38.696069
-Fish: Carp
-Size: 18 inches
-Weight: 15 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:11:05.529707
-Fish: Zander
-Size: 6 inches
-Weight: 1 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:11:53.730171
-Fish: Dead fish
-Size: 5 inches
-Weight: 5 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:12:33.049460
-Fish: Nemo
-Size: 3 inches
-Weight: 4 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:13:30.013372
-Fish: Carp
-Size: 15 inches
-Weight: 10 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:13:58.777851
-Fish: Brown Trout
-Size: 13 inches
-Weight: 6 lbs
-----------------------------------
-Timestamp: 2022-02-13 09:15:47.372757
-Fish: Dead fish
-Size: 1 inches
-Weight: 6 lbs
 ----------------------------------
