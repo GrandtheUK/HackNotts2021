@@ -128,3 +128,6 @@ demoMain.py
 
 # Pixel art files for editing - Jake
 *.ase
+
+# Diary for high scores - Jake
+diary.txt
