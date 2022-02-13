@@ -52,6 +52,7 @@ class Fisherman(pygame.sprite.Sprite):
                 self.float.state = "reeledFish"
                 self.float.target = self.rect.center
                 self.fishCaught = True
+                self.lineStrength = 100
             
     def cast(self, angle, power):
         vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 4) - pygame.Vector2(self.rect.center))

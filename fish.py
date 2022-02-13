@@ -53,8 +53,8 @@ class Fish:
         elif prob < 0.25: return "Grayling"
         elif prob < 0.30: return "Brown Trout"
         elif prob < 0.35: return "Zander"
-        elif prob < 0.40: return "Chub"
-        elif prob < 0.5: return "Carp"
+        elif prob < 0.45: return "Chub"
+        elif prob < 0.6: return "Carp"
         else:
             num = random.randint(1, 4)
 

@@ -28,6 +28,8 @@ class ControlPanel:
         self.angleIncrease = True
         self.lineBar = Bar(100,50,(DISPLAY[0]-200, top))
         self.fishBar = Bar(100,50,(DISPLAY[0]-50, top))
+        self.lineBarIcon = BarImage(100,100,(DISPLAY[0]-300, top), "sprites/line_strength.png")
+        self.fishBarIcon = BarImage(100,100,(DISPLAY[0]-150, top), "sprites/fish_strength.png")
         self.lineBarVal = 0
         self.fishBarVal = 0
         
@@ -37,6 +39,8 @@ class ControlPanel:
         self.powerBar.draw(screen)
         self.lineBar.draw(screen)
         self.fishBar.draw(screen)
+        self.lineBarIcon.draw(screen)
+        self.fishBarIcon.draw(screen)
         for button in self.buttons.values():
             button.draw(screen)
 
@@ -94,17 +98,24 @@ class Bar:
         self.rect = self.image.get_rect()
         self.topleft = topleft
         self.barValue = 0
-        
-    
+            
     def draw(self, screen):
         img = self.animationList[self.barValue]
         self.image = pygame.transform.scale(img, (self.width,self.height))
         pygame.Surface.blit(screen, self.image, self.topleft)
 
+class BarImage:
+    def __init__(self, height, width, topleft, path) -> None:
+        self.height = height
+        self.width = width
+        img = pygame.image.load(path)
+        self.image = pygame.transform.scale(img, (width,height))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = topleft
+        self.topleft = topleft
 
-
-
-
+    def draw(self, screen):
+        pygame.Surface.blit(screen, self.image, self.topleft)
 
 class Button:
     def __init__(self, width, height, topleft, buttonFunction=None) -> None:
