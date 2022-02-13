@@ -33,7 +33,11 @@ def main():
 
     clock = pygame.time.Clock()
 
-    cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1])
+    controlPanelFunctions = {
+        "reel_in" : fisherman.reel_in
+    }
+
+    cp = controlPanel.ControlPanel(CTRL_PANEL_HEIGHT, DISPLAY[0], DISPLAY[1], controlPanelFunctions)
 
     while True:
         while menuRunning:
@@ -78,6 +82,7 @@ def main():
             spriteGroup.update()
             spriteGroup.draw(screen)
             cp.draw(screen)
+            cp.update()
 
             pygame.display.flip()
             clock.tick(60)

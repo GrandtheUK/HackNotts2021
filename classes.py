@@ -1,6 +1,6 @@
 from extra_funcs import rand_with_step
 import pygame, sprite_sheet
-from random import randint, randrange, uniform
+from random import randint
 import fish
 from config import *
 
@@ -22,29 +22,54 @@ class Fisherman(pygame.sprite.Sprite):
         self.spriteGroup = spriteGroup
         self.state = "standing"
         self.castCounter = 0
-        self.hookedFish = False
+        self.hookedFish = None
         self.checkCatchCounter = 0
         self.catchMultiplier = 1
         self.castingAnimationCounter = 1
         self.castingAnimationTicks = 0
+        self.lineStrength = 100
+        self.fishCaught = False
+        self.recoveryTimer = 0
+        self.lineRecoveryAmt = 5
     
+    def reel_in(self):
+        if self.hookedFish:
+            self.lineStrength -= 10
+            self.hookedFish.energy -= 10
+            if self.lineStrength < 0:
+                print("line snap")
+                self.float.kill()
+                self.float = None
+                self.hookedFish = None
+                self.lineStrength = 100
+            elif self.hookedFish.energy < 0:
+                self.float.state = "reeledFish"
+                self.float.target = self.rect.center
+                self.fishCaught = True
+            
     def cast(self):
         self.state = "casting"
         self.castingAnimationCounter = 2
         
-    
     def reel(self):
         self.state = "reeling"
         self.float.state = "reeling"
         self.float.target = self.rect.midtop
 
     def update(self):
+        if self.recoveryTimer < pygame.time.get_ticks():
+            self.recoveryTimer = pygame.time.get_ticks() + 500
+            self.lineStrength += self.lineRecoveryAmt
+            if self.lineStrength > 100:
+                self.lineStrength = 100
+            if self.hookedFish and not self.fishCaught:
+                self.hookedFish.recover()
+
         if self.float:
             if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks() and not self.float.caughtFish:
                 self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
                 finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
                 if rand_with_step(0, finalCatchChance, 0.125) == 1:
-                    print("fish caught")
                     self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
                     self.float.caughtFish = True
@@ -91,7 +116,7 @@ class Float(pygame.sprite.Sprite):
         # keep collision rect inline with rect
         self.collisionRect.center = self.rect.center
 
-        if self.caughtFish:
+        if self.caughtFish and not self.fisherman.fishCaught:
             for tile in Tile.landTiles:
                 if self.collisionRect.colliderect(tile.rect):
                     vector = pygame.Vector2(self.rect.center) - pygame.Vector2(tile.rect.center)
@@ -124,13 +149,13 @@ class Float(pygame.sprite.Sprite):
                 if self.state == "casting":
                     self.state = "inWater"
                     self.fisherman.state = "standing"
-                elif self.state == "reeling":
+                elif self.state in ("reeling", "reeledFish"):
                     self.fisherman.float = None
                     self.kill()
                     return
             self.rect.center = self.pos
         else:
-            if self.caughtFish:
+            if self.caughtFish and not self.fisherman.fishCaught:
                 x = randint(0, DISPLAY[0])
                 y = randint(0, DISPLAY[1])
                 self.target = (x,y)

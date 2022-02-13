@@ -6,6 +6,8 @@ class Fish:
         self.type = self.createType()
         self.size = self.get_size(size)
         self.weight = self.createWeight()
+        self.energy = 100
+        self.recoveryRate = random.randint(0,3)
 
     def createWeight(self):
         if self.type == "Carp":
@@ -28,6 +30,11 @@ class Fish:
             return round(random.uniform(3.0, 15.0), 2)
         else:
             return 1
+    
+    def recover(self):
+        self.energy += self.recoveryRate
+        if self.energy > 100:
+            self.energy = 100
 
     def __repr__(self) -> str:
         return self.type
