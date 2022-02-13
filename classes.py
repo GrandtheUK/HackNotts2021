@@ -69,6 +69,11 @@ class Fisherman(pygame.sprite.Sprite):
         self.float.state = "reeling"
         self.float.target = self.rect.midtop
 
+    def force_catch(self):
+        self.hookedFish = fish.Fish()
+        self.state = "caughtFish"
+        self.float.caughtFish = True
+
     def update(self):
         if self.recoveryTimer < pygame.time.get_ticks():
             self.recoveryTimer = pygame.time.get_ticks() + 500

@@ -6,8 +6,12 @@ controlPanelColour = (148, 93, 50)
 infographicColour = (158, 143, 105)
 
 def open_diary():
-    os.startfile("diary.txt")
-
+    try:
+        os.startfile("diary.txt")
+    except:
+        log = open("diary.txt", "w")
+        log.close()
+        os.startfile("diary.txt")
 
 class ControlPanel:
     def __init__(self, height, width, top, functions) -> None:
