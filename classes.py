@@ -69,7 +69,7 @@ class Fisherman(pygame.sprite.Sprite):
             if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks() and not self.float.caughtFish:
                 self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
                 finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
-                if rand_with_step(0, finalCatchChance, 0.125) == 1:
+                if rand_with_step(0, finalCatchChance, 0.125) == 0:
                     self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
                     self.float.caughtFish = True
@@ -88,7 +88,7 @@ class Fisherman(pygame.sprite.Sprite):
 
 
 class Float(pygame.sprite.Sprite):
-    spriteSheet = sprite_sheet.Spritesheet("sprites/bobber_sprites.png", (16,16), (1,4))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/bobber_sprites.png", (16,16), (1,5))
     def __init__(self, spriteGroup, fisherman) -> None:
         super().__init__()
         self.fisherman = fisherman
@@ -164,7 +164,7 @@ class Float(pygame.sprite.Sprite):
 class Tile(pygame.sprite.Sprite):
     waterTiles = []
     landTiles = []
-    spriteSheet = sprite_sheet.Spritesheet("sprites/background_sprites.png", (16,16), (4,5))
+    spriteSheet = sprite_sheet.Spritesheet("sprites/background_sprites.png", (16,16), (5,5))
     def __init__(self, id, posx, posy, height, width) -> None:
         super().__init__()
         self.id = id
