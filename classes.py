@@ -1,4 +1,3 @@
-from pickletools import pyfloat
 from extra_funcs import rand_with_step
 import pygame, sprite_sheet
 from random import randint
