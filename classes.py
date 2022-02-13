@@ -170,8 +170,8 @@ class Float(pygame.sprite.Sprite):
                     self.fisherman.float = None
                     self.kill()
                     self.fisherman.state = "standing"
-                    print(self.fisherman.hookedFish)
-                    log.log_fish(self.fisherman.hookedFish)
+                    if self.fisherman.hookedFish:
+                        log.log_fish(self.fisherman.hookedFish)
                     self.fisherman.hookedFish = None
                     self.caughtFish = False
                     self.fisherman.checkCatchCounter = 0
