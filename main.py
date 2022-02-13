@@ -22,7 +22,7 @@ def main():
 
     floatPos = (200,200)
     # fishing line
-    fishingLine = classes.Line(screen, (fisherman.rect.centerx + 10,fisherman.rect.top + 10), floatPos)
+    fishingLine = classes.Line(screen, (fisherman.rect.centerx - 5,fisherman.rect.top), floatPos)
 
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):

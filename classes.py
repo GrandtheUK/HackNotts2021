@@ -74,6 +74,7 @@ class Fisherman(pygame.sprite.Sprite):
                 self.hookedFish.recover()
 
         if self.float:
+            self.state = "fishing"
             if self.float.state == "inWater" and self.checkCatchCounter < pygame.time.get_ticks() and not self.float.caughtFish:
                 self.checkCatchCounter = pygame.time.get_ticks() + (MINIMUM_CATCH_CHANCE * 1000)
                 finalCatchChance = FISH_CATCH_CHANCE * self.catchMultiplier
@@ -93,8 +94,7 @@ class Fisherman(pygame.sprite.Sprite):
             if self.castingAnimationCounter >= len(self.animationList):
                 self.float = Float(self.spriteGroup, self)
                 self.float.move(self.floatLaunchTarget)
-                self.state == "standing"
-                img = self.animationList[0]
+                img = self.animationList[4]
                 self.image = pygame.transform.scale(img, (self.width, self.height)) 
         
         if self.state == "standing":
