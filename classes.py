@@ -73,6 +73,9 @@ class Fisherman(pygame.sprite.Sprite):
                     self.hookedFish = fish.Fish((1,20))
                     self.state = "caughtFish"
                     self.float.caughtFish = True
+                img = self.animationList[4]
+                self.image = pygame.transform.scale(img, (self.width, self.height)) 
+
         
         if self.state == "casting" and pygame.time.get_ticks() > self.castingAnimationTicks and self.castingAnimationCounter < len(self.animationList):
             self.castingAnimationTicks = pygame.time.get_ticks() + 200   
@@ -85,6 +88,10 @@ class Fisherman(pygame.sprite.Sprite):
                 self.state == "standing"
                 img = self.animationList[0]
                 self.image = pygame.transform.scale(img, (self.width, self.height)) 
+        
+        if self.state == "standing":
+            img = self.animationList[0]
+            self.image = pygame.transform.scale(img, (self.width, self.height)) 
 
 
 class Float(pygame.sprite.Sprite):
