@@ -46,13 +46,12 @@ class Fisherman(pygame.sprite.Sprite):
                 self.hookedFish = None
                 self.lineStrength = 100
                 self.state = "standing"
-                self.caughtFish = False
                 self.checkCatchCounter = 0
                 self.fishCaught = False
                 self.lastFish = "line-snap"
             elif self.hookedFish.energy < 0:
                 self.float.state = "reeledFish"
-                self.float.target = self.rect.center
+                self.float.target = self.rect.midtop
                 self.fishCaught = True
                 self.lineStrength = 100
             

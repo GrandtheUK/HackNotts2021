@@ -59,7 +59,7 @@ def main():
                     elif cp.mode == 1:
                         cp.mode = 2
                         fisherman.cast(cp.angle, cp.power)
-                    elif cp.mode == 2 and fisherman.float:
+                    elif cp.mode == 2 and fisherman.float and not fisherman.hookedFish:
                         fisherman.reel()
                     if fisherman.state == "standing" and cp.mode == 2:
                         cp.angle = 0
