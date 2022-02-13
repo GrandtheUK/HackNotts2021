@@ -56,6 +56,7 @@ class Fisherman(pygame.sprite.Sprite):
                 self.lineStrength = 100
             
     def cast(self, angle, power):
+        if power < 30:power = 30
         vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 4) - pygame.Vector2(self.rect.center))
         vector = vector.rotate(angle)
         self.floatLaunchTarget = self.rect.center - vector
