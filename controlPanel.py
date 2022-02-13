@@ -119,7 +119,7 @@ class BarImage:
 
 class Button:
     def __init__(self, width, height, topleft, buttonFunction=None) -> None:
-        img = pygame.image.load("R.png")
+        img = pygame.image.load("sprites/button.png")
         self.image = pygame.transform.scale(img, (width,height))
         self.rect = self.image.get_rect()
         self.rect.topleft = topleft
@@ -157,7 +157,7 @@ class PowerBar:
 
 class Button:
     def __init__(self, width, height, topleft, buttonFunction=None) -> None:
-        img = pygame.image.load("R.png")
+        img = pygame.image.load("sprites/button.png")
         self.image = pygame.transform.scale(img, (width,height))
         self.rect = self.image.get_rect()
         self.rect.topleft = topleft
