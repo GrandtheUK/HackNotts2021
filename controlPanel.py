@@ -20,12 +20,12 @@ class ControlPanel:
         self.powerBar = PowerBar(height, ( width//2 - height//2 ,top))
         self.buttons = {
             "button1" :  Button(100,50,(0,top), test_function),
-            "button2" :  Button(100,50,(0,top + 50), test_function2),
-            "reelButton" :  Button(100,50, (DISPLAY[0] - 100,top + 50), functions["reel_in"])
+            "button2" :  Button(100,50,(0,top + 50), test_function2)
         }
         self.angle = 0
         self.power = 0
-
+        self.mode = 0
+        self.angleIncrease = True
         
     def draw(self, screen):
         pygame.Surface.blit(screen, self.image, (0,self.top))
@@ -34,7 +34,22 @@ class ControlPanel:
             button.draw(screen)
 
     def update(self):
-        pass
+        if self.mode == 0:
+            if self.angleIncrease:
+                self.angle += 1
+                if self.angle > 45:
+                    self.angle = 45
+                    self.angleIncrease = False
+            else:
+                self.angle -= 1
+                if self.angle < -45:
+                    self.angle = -45
+                    self.angleIncrease = True
+        elif self.mode == 1:
+            self.power += 1
+            if self.power > 100:
+                self.angle = 0
+
 
     def check_cursor_pos(self, mousepos):
         for button in self.buttons.values():

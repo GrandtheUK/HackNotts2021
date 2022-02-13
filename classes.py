@@ -1,3 +1,4 @@
+from pickletools import pyfloat
 from extra_funcs import rand_with_step
 import pygame, sprite_sheet
 from random import randint
@@ -31,6 +32,7 @@ class Fisherman(pygame.sprite.Sprite):
         self.fishCaught = False
         self.recoveryTimer = 0
         self.lineRecoveryAmt = 5
+        self.floatLaunchTarget = None
     
     def reel_in(self):
         if self.hookedFish:
@@ -42,12 +44,17 @@ class Fisherman(pygame.sprite.Sprite):
                 self.float = None
                 self.hookedFish = None
                 self.lineStrength = 100
+                self.state = "standing"
             elif self.hookedFish.energy < 0:
                 self.float.state = "reeledFish"
                 self.float.target = self.rect.center
                 self.fishCaught = True
             
-    def cast(self):
+    def cast(self, angle, power):
+        vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 5) - pygame.Vector2(self.rect.center))
+        vector = vector.rotate(angle)
+        print(self.rect.center)
+        self.floatLaunchTarget = self.rect.center - vector
         self.state = "casting"
         self.castingAnimationCounter = 2
         
@@ -81,7 +88,7 @@ class Fisherman(pygame.sprite.Sprite):
             self.castingAnimationCounter += 1
             if self.castingAnimationCounter >= len(self.animationList):
                 self.float = Float(self.spriteGroup, self)
-                self.float.move((350,200))
+                self.float.move(self.floatLaunchTarget)
                 self.state == "standing"
                 img = self.animationList[0]
                 self.image = pygame.transform.scale(img, (self.width, self.height)) 
@@ -110,7 +117,6 @@ class Float(pygame.sprite.Sprite):
 
     def move(self, coords):
         self.target = coords
-
     
     def update(self):
         # keep collision rect inline with rect
