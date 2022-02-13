@@ -1,5 +1,6 @@
 import pygame, sprite_sheet
 from config import DISPLAY
+import os
 
 controlPanelColour = (127,127,10)
 
@@ -7,8 +8,8 @@ controlPanelColour = (127,127,10)
 def test_function():
     print("test")
 
-def test_function2():
-    print("test2")
+def open_diary():
+    os.startfile("diary.txt")
 
 
 class ControlPanel:
@@ -19,8 +20,8 @@ class ControlPanel:
         self.top = top
         self.powerBar = PowerBar(height, ( width//2 - height//2 ,top))
         self.buttons = {
-            "button1" :  Button(100,50,(0,top), test_function),
-            "button2" :  Button(100,50,(0,top + 50), test_function2)
+            "button1" :  Button(100,50,(0,top), functions["exit"]),
+            "button2" :  Button(100,50,(0,top + 50), open_diary)
         }
         self.angle = 0
         self.power = 0

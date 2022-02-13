@@ -1,0 +1,20 @@
+Timestamp: 2022-02-13 05:08:41.398440
+Fish: Carp
+Size: 34 inches
+Weight: 10 lbs
+----------------------------------
+Timestamp: 2022-02-13 05:24:08.414270
+Fish: Shoe
+Size: 44 inches
+Weight: 5 lbs
+----------------------------------
+Timestamp: 2022-02-13 05:27:26.446668
+Fish: Shoe fish
+Size: 44 inches
+Weight: 4 lbs
+----------------------------------
+Timestamp: 2022-02-13 05:45:36.652085
+Fish: Carp
+Size: 25 inches
+Weight: 5 lbs
+----------------------------------
