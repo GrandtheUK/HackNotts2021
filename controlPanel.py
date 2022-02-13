@@ -17,8 +17,8 @@ class ControlPanel:
         self.top = top
         self.powerBar = PowerBar(height, ( width//2 - height//2 ,top))
         self.buttons = {
-            "button1" :  Button(100,50,(0,top), functions["exit"]),
-            "button2" :  Button(100,50,(0,top + 50), open_diary)
+            "button1" :  Button(100,50,(0,top), functions["exit"], "sprites/button_exit.png"),
+            "button2" :  Button(100,50,(0,top + 50), open_diary, "sprites/button_scores.png")
         }
         self.angle = 0
         self.power = 0
@@ -116,8 +116,8 @@ class BarImage:
         pygame.Surface.blit(screen, self.image, self.topleft)
 
 class Button:
-    def __init__(self, width, height, topleft, buttonFunction=None) -> None:
-        img = pygame.image.load("sprites/button.png")
+    def __init__(self, width, height, topleft, buttonFunction=None, path="sprites/button.png") -> None:
+        img = pygame.image.load(path)
         self.image = pygame.transform.scale(img, (width,height))
         self.rect = self.image.get_rect()
         self.rect.topleft = topleft
@@ -152,18 +152,3 @@ class PowerBar:
         img = self.animationList[imgIndex]
         self.image = pygame.transform.scale(img, (self.dim,self.dim))
         pygame.Surface.blit(screen, self.image, self.topleft)
-
-class Button:
-    def __init__(self, width, height, topleft, buttonFunction=None) -> None:
-        img = pygame.image.load("sprites/button.png")
-        self.image = pygame.transform.scale(img, (width,height))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = topleft
-        self.topleft = topleft
-        self.buttonFunction = buttonFunction
-    
-    def draw(self, screen):
-        pygame.Surface.blit(screen, self.image, self.topleft)
-    
-    def performFunction(self):
-        self.buttonFunction()

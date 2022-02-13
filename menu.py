@@ -9,7 +9,8 @@ class Menu:
         self.screen = screen
         self.screen.fill(self.white)
 
-        self.start_button = pygame.image.load("sprites/start.png").convert()
+        self.start_button_image = pygame.image.load("sprites/start.png").convert_alpha()
+        self.start_button = pygame.transform.scale(self.start_button_image, (100, 50))
         self.start_rect = self.start_button.get_rect()
         self.start_rect.center = (DISPLAY[0] / 2, 500)
 

@@ -27,4 +27,8 @@ Timestamp: 2022-02-13 06:29:31.937381
 Fish: Grayling
 Size: 11 inches
 Weight: 6 lbs
+----------------------------------Timestamp: 2022-02-13 07:49:33.016651
+Fish: Zander
+Size: 10 inches
+Weight: 3 lbs
 ----------------------------------
