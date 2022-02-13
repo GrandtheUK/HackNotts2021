@@ -3,7 +3,7 @@ from config import DISPLAY
 import os
 
 controlPanelColour = (148, 93, 50)
-infographicColour = (158, 143, 105)
+infographicColour = (180, 180, 140)
 
 def open_diary():
     try:

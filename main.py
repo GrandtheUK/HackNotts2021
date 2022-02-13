@@ -79,9 +79,9 @@ def main():
         if fisherman.float:
             showLine = True
             fishingLine.endPos = fisherman.float.rect.center
-        fishingLine.update(showLine)
         spriteGroup.update()
         spriteGroup.draw(screen)
+        fishingLine.update(showLine)
         if fisherman.hookedFish:
             cp.fishBarVal = fisherman.hookedFish.energy
         cp.lineBarVal = fisherman.lineStrength
