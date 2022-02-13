@@ -1,7 +1,6 @@
 import pygame, sprite_sheet
 from config import DISPLAY
 import os
-from pygame import freetype
 
 controlPanelColour = (127,127,10)
 infographicColour = (180,180,20)
@@ -119,10 +118,10 @@ class Infographic:
     def draw(self, screen, lastFish):
         pygame.Surface.blit(screen, self.image, self.topleft)
         if lastFish == "line-snap":
-            font = pygame.font.Font('Pokemon GB.ttf', 16)
+            font = pygame.font.Font('Pokemon GB.ttf', 14)
             lineErr = font.render("Line Snapped!", True, (0,0,0))
             lineErrRect = lineErr.get_rect()
-            lineErrRect.topleft = (self.topleft[0]+30, self.topleft[1] + 40)
+            lineErrRect.topleft = (self.topleft[0]+5, self.topleft[1] + 40)
             pygame.Surface.blit(screen, lineErr, lineErrRect)  
         elif lastFish is not None:
             fishId = self.get_fish_id(lastFish.type)
@@ -131,9 +130,9 @@ class Infographic:
             else:
                 img = self.smallfish.get_sprite_image(fishId[1])
             image = pygame.transform.scale(img, (100-fishId[0]*50, 50))
-            pygame.Surface.blit(screen, image, (self.topleft[0]+5+fishId[0]*25,self.topleft[1]+25))
+            pygame.Surface.blit(screen, image, (self.topleft[0]+5,self.topleft[1]+5))
 
-            font = pygame.font.Font('Pokemon GB.ttf', 12)
+            font = pygame.font.Font('Pokemon GB.ttf', 10)
         
             title = font.render(lastFish.type, True, (0,0,0))
             titleRect = title.get_rect()
@@ -143,13 +142,13 @@ class Infographic:
             weightLabel = f"Weight: {lastFish.weight} lbs"
             weight = font.render(weightLabel, True, (0,0,0))
             weightRect = weight.get_rect()
-            weightRect.topleft = (self.topleft[0]+110, self.topleft[1] + 40)
+            weightRect.topleft = (self.topleft[0]+5, self.topleft[1] + 60)
             pygame.Surface.blit(screen, weight, weightRect)
             
             sizeLabel = f"Size: {lastFish.size} inches"
             size = font.render(sizeLabel, True, (0,0,0))
             sizeRect = size.get_rect()
-            sizeRect.topleft = (self.topleft[0]+110, self.topleft[1] + 60)
+            sizeRect.topleft = (self.topleft[0]+5, self.topleft[1] + 75)
             pygame.Surface.blit(screen, size, sizeRect)
     
 
