@@ -1,9 +1,10 @@
 import pygame, sprite_sheet
 from config import DISPLAY
 import os
+from pygame import freetype
 
 controlPanelColour = (127,127,10)
-
+infographicColour = (180,180,20)
 
 def open_diary():
     os.startfile("diary.txt")
@@ -30,6 +31,8 @@ class ControlPanel:
         self.fishBarIcon = BarImage(100,100,(DISPLAY[0]-150, top), "sprites/fish_strength.png")
         self.lineBarVal = 0
         self.fishBarVal = 0
+        self.infographic = Infographic(90, 200, (105,top + 5))
+        self.lastFish = None
         
         
     def draw(self, screen):
@@ -39,6 +42,7 @@ class ControlPanel:
         self.fishBar.draw(screen)
         self.lineBarIcon.draw(screen)
         self.fishBarIcon.draw(screen)
+        self.infographic.draw(screen, self.lastFish)
         for button in self.buttons.values():
             button.draw(screen)
 
@@ -84,6 +88,70 @@ class ControlPanel:
             if button.rect.collidepoint(mousepos):
                 button.performFunction()
 
+
+class Infographic:
+    bigfish = sprite_sheet.Spritesheet("sprites/big_fish.png", (32,16), (4,1))
+    smallfish = sprite_sheet.Spritesheet("sprites/small_fish_and_trash.png", (16,16), (3,3))
+    def __init__(self, height, width, topleft) -> None:
+        self.image = pygame.Surface([width,height])
+        pygame.draw.rect(self.image, infographicColour, pygame.Rect(0, 0, width, height))
+        self.rect = self.image.get_rect()
+        self.topleft = topleft
+
+    @staticmethod
+    def get_fish_id(fish):
+        fishNames = {
+        "Nemo" : (1,2),
+        "Magikarp" : (0,3),
+        "Dead fish" : (1,6),
+        "Shoe fish" : (1,5),
+        "Grayling" : (1,4),
+        "Brown Trout" : (0,2),
+        "Zander" : (0,1),
+        "Chub" : (1,3),
+        "Carp" : (0,0),
+        "Shoe" : (1,0),
+        "Stick" : (1,1)
+        }
+        return fishNames[fish]
+
+
+    def draw(self, screen, lastFish):
+        pygame.Surface.blit(screen, self.image, self.topleft)
+        if lastFish == "line-snap":
+            font = freetype.Font('Pokemon GB.ttf', 16)
+            lineErr = font.render("Line Snapped!", True, (0,0,0))
+            lineErrRect = lineErr.get_rect()
+            lineErrRect.topleft = (self.topleft[0]+30, self.topleft[1] + 40)
+            pygame.Surface.blit(screen, lineErr, lineErrRect)  
+        elif lastFish is not None:
+            fishId = self.get_fish_id(lastFish.type)
+            if fishId[0] == 0:
+                img = self.bigfish.get_sprite_image(fishId[1])
+            else:
+                img = self.smallfish.get_sprite_image(fishId[1])
+            image = pygame.transform.scale(img, (100-fishId[0]*50, 50))
+            pygame.Surface.blit(screen, image, (self.topleft[0]+5+fishId[0]*25,self.topleft[1]+25))
+
+            font = freetype.Font('Pokemon GB.ttf', 12)
+        
+            title = font.render(lastFish.type, True, (0,0,0))
+            titleRect = title.get_rect()
+            titleRect.topleft = (self.topleft[0]+110, self.topleft[1] + 20)
+            pygame.Surface.blit(screen, title, titleRect)
+            
+            weightLabel = f"Weight: {lastFish.weight} lbs"
+            weight = font.render(weightLabel, True, (0,0,0))
+            weightRect = weight.get_rect()
+            weightRect.topleft = (self.topleft[0]+110, self.topleft[1] + 40)
+            pygame.Surface.blit(screen, weight, weightRect)
+            
+            sizeLabel = f"Size: {lastFish.size} inches"
+            size = font.render(sizeLabel, True, (0,0,0))
+            sizeRect = size.get_rect()
+            sizeRect.topleft = (self.topleft[0]+110, self.topleft[1] + 60)
+            pygame.Surface.blit(screen, size, sizeRect)
+    
 
 class Bar:
     spriteSheet = sprite_sheet.Spritesheet("sprites/fish_bar.png", (16,32), (2,4))

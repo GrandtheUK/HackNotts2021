@@ -24,7 +24,7 @@ def main():
     spriteGroup = pygame.sprite.Group()
     fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2,spriteGroup)
     spriteGroup.add(fisherman)
-    
+
     floatPos = (200,200)
     # fishing line
     fishingLine = classes.Line(screen, (fisherman.rect.centerx - 5,fisherman.rect.top), floatPos)
@@ -82,6 +82,7 @@ def main():
         if fisherman.hookedFish:
             cp.fishBarVal = fisherman.hookedFish.energy
         cp.lineBarVal = fisherman.lineStrength
+        cp.lastFish = fisherman.lastFish
         cp.draw(screen)
         cp.update()
 

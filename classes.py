@@ -34,6 +34,7 @@ class Fisherman(pygame.sprite.Sprite):
         self.recoveryTimer = 0
         self.lineRecoveryAmt = 18
         self.floatLaunchTarget = None
+        self.lastFish = None
     
     def reel_in(self):
         if self.hookedFish:
@@ -48,6 +49,7 @@ class Fisherman(pygame.sprite.Sprite):
                 self.caughtFish = False
                 self.checkCatchCounter = 0
                 self.fishCaught = False
+                self.lastFish = "line-snap"
             elif self.hookedFish.energy < 0:
                 self.float.state = "reeledFish"
                 self.float.target = self.rect.center
@@ -172,6 +174,7 @@ class Float(pygame.sprite.Sprite):
                     self.fisherman.state = "standing"
                     if self.fisherman.hookedFish:
                         log.log_fish(self.fisherman.hookedFish)
+                        self.fisherman.lastFish = self.fisherman.hookedFish
                     self.fisherman.hookedFish = None
                     self.caughtFish = False
                     self.fisherman.checkCatchCounter = 0
