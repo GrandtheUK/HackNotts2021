@@ -38,8 +38,6 @@ class Fisherman(pygame.sprite.Sprite):
         if self.hookedFish:
             self.lineStrength -= 1
             self.hookedFish.energy -= 1
-            print(self.lineStrength)
-            print(self.hookedFish.energy)
             if self.lineStrength < 0:
                 print("line snap")
                 self.float.kill()
@@ -47,13 +45,16 @@ class Fisherman(pygame.sprite.Sprite):
                 self.hookedFish = None
                 self.lineStrength = 100
                 self.state = "standing"
+                self.caughtFish = False
+                self.checkCatchCounter = 0
+                self.fishCaught = False
             elif self.hookedFish.energy < 0:
                 self.float.state = "reeledFish"
                 self.float.target = self.rect.center
                 self.fishCaught = True
             
     def cast(self, angle, power):
-        vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 5) - pygame.Vector2(self.rect.center))
+        vector = pygame.Vector2((self.rect.centerx, self.rect.centery + power * 4) - pygame.Vector2(self.rect.center))
         vector = vector.rotate(angle)
         self.floatLaunchTarget = self.rect.center - vector
         self.state = "casting"
@@ -167,6 +168,7 @@ class Float(pygame.sprite.Sprite):
                     self.fisherman.float = None
                     self.kill()
                     self.fisherman.state = "standing"
+                    print(self.fisherman.hookedFish)
                     self.fisherman.hookedFish = None
                     self.caughtFish = False
                     self.fisherman.checkCatchCounter = 0
