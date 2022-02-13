@@ -19,17 +19,14 @@ class Fish:
             self.recoveryRate = random.randint(self.fish["recovery"][0],self.fish["recovery"][1])
             self.recoveryCounter = 0
         self.energy += self.recoveryRate
-        print(self.recoveryRate)
         if self.energy > 100:
             self.energy = 100
 
     def __repr__(self) -> str:
         return f"{self.type}, {self.weight}, {self.size}"
 
-
     def createType(self):
         prob = random.random()
-
         if prob < 0.05: return "Nemo"
         elif prob < 0.10: return "Magikarp"
         elif prob < 0.25: return "Dead fish"

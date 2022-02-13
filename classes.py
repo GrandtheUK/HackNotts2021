@@ -40,7 +40,6 @@ class Fisherman(pygame.sprite.Sprite):
             self.lineStrength -= 2
             self.hookedFish.energy -= 1
             if self.lineStrength < 0:
-                print("line snap")
                 self.float.kill()
                 self.float = None
                 self.hookedFish = None

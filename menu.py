@@ -4,20 +4,19 @@ from config import *
 
 class Menu:
     def __init__(self, screen):
-        self.grey = (100, 100, 100)
+        self.white = (255, 255, 255)
 
         self.screen = screen
-        self.screen.fill(self.grey)
-
-        self.alignCenter = DISPLAY[0]/2, DISPLAY[1]/2
+        self.screen.fill(self.white)
 
         self.start_button = pygame.image.load("Start.png").convert()
         self.start_rect = self.start_button.get_rect()
-        self.start_rect.center = self.alignCenter
+        self.start_rect.center = (DISPLAY[0] / 2, 500)
 
-        self.background = pygame.image.load("background.png").convert()
+        background = pygame.image.load("catching_fish.png").convert()
+        self.background = pygame.transform.scale(background, WINDOW)
         self.back_rect = self.background.get_rect()
-        self.back_rect.center = self.alignCenter
+        self.back_rect.topleft = (0,0)
 
         self.run = True
 
@@ -30,7 +29,7 @@ class Menu:
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    if self.start_button.get_rect(center = (self.alignCenter)).collidepoint(pos):
+                    if self.start_rect.collidepoint(pos):
                         self.run = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:

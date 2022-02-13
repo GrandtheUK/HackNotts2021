@@ -24,11 +24,11 @@ def main():
     spriteGroup = pygame.sprite.Group()
     fisherman = classes.Fisherman(5*TILESIZE,7*TILESIZE,TILESIZE,TILESIZE*2,spriteGroup)
     spriteGroup.add(fisherman)
-
+    
     floatPos = (200,200)
     # fishing line
     fishingLine = classes.Line(screen, (fisherman.rect.centerx - 5,fisherman.rect.top), floatPos)
-
+    # create tile objects
     for i in range(GRID_WIDTH):
         for j in range(GRID_HEIGHT):
             id = thisLevel[j][i]

@@ -5,9 +5,6 @@ import os
 controlPanelColour = (127,127,10)
 
 
-def test_function():
-    print("test")
-
 def open_diary():
     os.startfile("diary.txt")
 
